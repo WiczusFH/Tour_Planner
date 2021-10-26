@@ -1,0 +1,9 @@
+C:\Users\Oskar\source\repos\Tour_Planner\DataAccess\bin\Debug\netcoreapp3.1\DataAccess.deps.json
+C:\Users\Oskar\source\repos\Tour_Planner\DataAccess\bin\Debug\netcoreapp3.1\DataAccess.dll
+C:\Users\Oskar\source\repos\Tour_Planner\DataAccess\bin\Debug\netcoreapp3.1\DataAccess.pdb
+C:\Users\Oskar\source\repos\Tour_Planner\DataAccess\obj\Debug\netcoreapp3.1\DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Oskar\source\repos\Tour_Planner\DataAccess\obj\Debug\netcoreapp3.1\DataAccess.AssemblyInfoInputs.cache
+C:\Users\Oskar\source\repos\Tour_Planner\DataAccess\obj\Debug\netcoreapp3.1\DataAccess.AssemblyInfo.cs
+C:\Users\Oskar\source\repos\Tour_Planner\DataAccess\obj\Debug\netcoreapp3.1\DataAccess.csproj.CoreCompileInputs.cache
+C:\Users\Oskar\source\repos\Tour_Planner\DataAccess\obj\Debug\netcoreapp3.1\DataAccess.dll
+C:\Users\Oskar\source\repos\Tour_Planner\DataAccess\obj\Debug\netcoreapp3.1\DataAccess.pdb

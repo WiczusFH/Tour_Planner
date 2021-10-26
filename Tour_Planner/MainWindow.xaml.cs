@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using log4net;
 
 namespace Tour_Planner
 {
@@ -22,7 +23,9 @@ namespace Tour_Planner
     {
         public MainWindow()
         {
+
             InitializeComponent();
+
         }
     }
 }

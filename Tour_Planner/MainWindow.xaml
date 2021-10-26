@@ -4,9 +4,59 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Tour_Planner"
+        xmlns:usrcntr="clr-namespace:Tour_Planner_3.View.UserControls"
+        xmlns:viewModel="clr-namespace:ViewModel;assembly=ViewModel"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.DataContext>
+        <viewModel:MainViewModel/>
+    </Window.DataContext>
     <Grid>
-
+        <TabControl>
+            <TabItem Header="Routes">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1.5*"/>
+                        <ColumnDefinition Width="2.5*"/>
+                    </Grid.ColumnDefinitions>
+                    <TabControl Grid.Column="0">
+                        <TabItem Header="Route List">
+                            <usrcntr:ToursList/>
+                        </TabItem>
+                        <TabItem Header="Add Route">
+                            <usrcntr:AddTour/>
+                        </TabItem>
+                        <TabItem Header="Report">
+                            <usrcntr:Report/>
+                        </TabItem>
+                    </TabControl>
+                    <Border Grid.Column="1">
+                        <usrcntr:map/>
+                    </Border>
+                </Grid>
+            </TabItem>
+            <TabItem Header="My Logs">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="4*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border>
+                        <TabControl>
+                            <TabItem Header="Your Logs">
+                                <usrcntr:UserLogs/>
+                            </TabItem>
+                            <TabItem Header="Add Logs">
+                                <usrcntr:AddLog/>
+                            </TabItem>
+                        </TabControl>
+                    </Border>
+                    <Border Grid.Column="1">
+                        <usrcntr:map/>
+                    </Border>
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <!--<TextBlock DataContext="{Binding notifyUser}" Visibility="{Binding visible}" Text="{Binding error}" HorizontalAlignment="Center" VerticalAlignment="Top" Background="#FFB9B9B9" Height="58" Margin="0,526,0,0" Width="436"/>-->
     </Grid>
 </Window>

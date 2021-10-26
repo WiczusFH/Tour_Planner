@@ -1,0 +1,104 @@
+﻿<UserControl x:Class="Tour_Planner_3.View.UserControls.UserLogs"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Tour_Planner_3.View.UserControls"
+             xmlns:viewModel="clr-namespace:ViewModel;assembly=ViewModel"
+             
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.DataContext>
+        <viewModel:MainViewModel/>
+    </UserControl.DataContext>
+    <StackPanel Background="White" DataContext="{Binding listLogsViewModel}">
+        <ItemsControl ItemsSource="{Binding logList}" AlternationCount="100">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Border BorderBrush="DimGray" BorderThickness="3">
+                    <StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/> 
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="0.375*"/>
+                                <ColumnDefinition Width="0.375*"/>
+                                <ColumnDefinition Width="0.375*"/>
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Column="0" BorderBrush="DarkGray" BorderThickness="2">
+                                <TextBlock Text="{Binding logTitle}"/>
+                            </Border>
+                            <Border Grid.Column="1" BorderBrush="DarkGray" BorderThickness="2">
+                                <TextBlock Text="{Binding routeName}"/>
+                            </Border>
+                            <Border Grid.Column="2" BorderBrush="DarkGray" BorderThickness="2">
+                                <TextBlock Text="{Binding dateString}"/>
+                            </Border>
+
+                            <Border Grid.Column="3" BorderBrush="DarkGray" BorderThickness="2">
+                                <Button
+                                    DataContext="{Binding RelativeSource={RelativeSource AncestorType=StackPanel},
+                                     Path=DataContext}" Command="{Binding showLogMapCommand}" 
+                                        CommandParameter="{Binding Path=(ItemsControl.AlternationIndex), 
+                                       RelativeSource={RelativeSource TemplatedParent}, 
+                                        StringFormat={}Index is {0}}">
+                                    Show
+                                </Button>
+                            </Border>
+                            <Border Grid.Column="4" BorderBrush="DarkGray" BorderThickness="2">
+                                <Button >
+                                    Edit
+                                </Button>
+                            </Border>
+
+                            <Border Grid.Column="5" BorderBrush="DarkGray" BorderThickness="2">
+                                <Button >
+                                    Del
+                                </Button>
+                            </Border>
+
+                        </Grid>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="1.25*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="1.25*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <!-- duration, distance, average Speed, topSpeed, calories,report-->
+
+                            <Border Grid.Column="0" BorderBrush="DarkGray" BorderThickness="2">
+                                <TextBlock Text="{Binding duration, StringFormat='{}{0} h'}"/>
+                            </Border>
+                            <Border Grid.Column="1" BorderBrush="DarkGray" BorderThickness="2">
+                                <TextBlock Text="{Binding distance, StringFormat='{}{0} km'}"/>
+                            </Border>
+                            <Border Grid.Column="2" BorderBrush="DarkGray" BorderThickness="2">
+                                <TextBlock Text="{Binding averageSpeed, StringFormat='{}{0} km/h'}"/>
+                            </Border>
+                            <Border Grid.Column="3" BorderBrush="DarkGray" BorderThickness="2">
+                                <TextBlock Text="{Binding topSpeed, StringFormat='{}{0} km/h'}"/>
+                            </Border>
+                            <Border Grid.Column="4" BorderBrush="DarkGray" BorderThickness="2">
+                                <TextBlock Text="{Binding calories, StringFormat='{}{0} kcal'}"/>
+                            </Border>
+                            <Border Grid.Column="5" BorderBrush="DarkGray" BorderThickness="2">
+                                <TextBlock Text="{Binding rating, StringFormat='{}{0}/5'}"/>
+                            </Border>
+                            </Grid>
+                        <Border BorderBrush="DarkGray" BorderThickness="2">
+                            <TextBlock Text="{Binding report}"/>
+                        </Border>
+                    </StackPanel>
+                    </Border>
+                </DataTemplate> 
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        <Button Command="{Binding updateLogListCommand}">Refresh</Button>
+    </StackPanel>
+    
+</UserControl>
+

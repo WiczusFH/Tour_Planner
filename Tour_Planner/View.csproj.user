@@ -10,5 +10,23 @@
     <Page Update="MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="UserControls\AddLog.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UserControls\AddTour.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UserControls\ListLogs.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UserControls\ListTours.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UserControls\map.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UserControls\Report.xaml">
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
 </Project>

@@ -5,13 +5,15 @@ VisualStudioVersion = 16.0.31702.278
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "View", "Tour_Planner\View.csproj", "{21E50D74-E2AC-4331-9AAC-3C93ED2B0DB5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelView", "ModelView\ModelView.csproj", "{D3FB17F1-B043-4C62-965A-CF312E574D04}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewModel", "ModelView\ViewModel.csproj", "{D3FB17F1-B043-4C62-965A-CF312E574D04}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Model\Model.csproj", "{3CE8EAD0-C08F-4D59-AD3D-DF5E15D376CA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Business", "Business\Business.csproj", "{64D7B6A7-199C-43DB-A518-5EBD4A23AB3C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{F68566AA-920E-49FA-BA24-78D742D11317}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{7A70882D-E47C-4D17-912B-CAA6E44A7C8B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{F68566AA-920E-49FA-BA24-78D742D11317}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F68566AA-920E-49FA-BA24-78D742D11317}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F68566AA-920E-49FA-BA24-78D742D11317}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A70882D-E47C-4D17-912B-CAA6E44A7C8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A70882D-E47C-4D17-912B-CAA6E44A7C8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A70882D-E47C-4D17-912B-CAA6E44A7C8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A70882D-E47C-4D17-912B-CAA6E44A7C8B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

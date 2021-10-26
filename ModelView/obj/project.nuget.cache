@@ -1,8 +1,18 @@
 {
   "version": 2,
-  "dgSpecHash": "9q5gtDUgCcMTEonxh0qqiMZgznl9jHBIf7CbBYUgsit+y+wcnLxz6UcgmYW9q1po9Rt7bxcU7Mxui6MyF/KKdQ==",
+  "dgSpecHash": "VAxMrAmvVxRbIfKmn503Z2+ANJRbAKYfKVyEdto/wFqjrosxcxps6Ynd7I5xFtNcCcRp6FDu7g+7UNXXBGIXRQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Oskar\\source\\repos\\Tour_Planner\\ModelView\\ModelView.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\Oskar\\source\\repos\\Tour_Planner\\ModelView\\ViewModel.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Oskar\\.nuget\\packages\\log4net\\2.0.12\\log4net.2.0.12.nupkg.sha512",
+    "C:\\Users\\Oskar\\.nuget\\packages\\microsoft.netcore.platforms\\5.0.0\\microsoft.netcore.platforms.5.0.0.nupkg.sha512",
+    "C:\\Users\\Oskar\\.nuget\\packages\\microsoft.win32.systemevents\\5.0.0\\microsoft.win32.systemevents.5.0.0.nupkg.sha512",
+    "C:\\Users\\Oskar\\.nuget\\packages\\system.configuration.configurationmanager\\4.5.0\\system.configuration.configurationmanager.4.5.0.nupkg.sha512",
+    "C:\\Users\\Oskar\\.nuget\\packages\\system.drawing.common\\5.0.2\\system.drawing.common.5.0.2.nupkg.sha512",
+    "C:\\Users\\Oskar\\.nuget\\packages\\system.security.accesscontrol\\4.5.0\\system.security.accesscontrol.4.5.0.nupkg.sha512",
+    "C:\\Users\\Oskar\\.nuget\\packages\\system.security.cryptography.protecteddata\\4.5.0\\system.security.cryptography.protecteddata.4.5.0.nupkg.sha512",
+    "C:\\Users\\Oskar\\.nuget\\packages\\system.security.permissions\\4.5.0\\system.security.permissions.4.5.0.nupkg.sha512",
+    "C:\\Users\\Oskar\\.nuget\\packages\\system.security.principal.windows\\4.5.0\\system.security.principal.windows.4.5.0.nupkg.sha512"
+  ],
   "logs": []
 }
