@@ -59,16 +59,14 @@ namespace DataAccess
 
             return result;
         }
-        public Mapquest() { 
-        }
-        public async Task<BitmapImage> GetMapRouteCoord(float x0, float y0, float x1, float y1)
+        public async Task<BitmapImage> GetMapRouteCoord(float x0, float y0, float x1, float y1) //-R make async
         {
             string URL = $"https://www.mapquestapi.com/staticmap/v5/map?key={Configuration.MapQuestKey}&start={x0},{y0}&end={x1},{y1}";
-            ImageLoader imageLoader = new ImageLoader();
-            //byte[] img = await GetRequest_b(URL);
-            //return LoadImage(img);
-            return imageLoader.getImageHttp(URL);
+
+            byte[] img = await GetRequest_b(URL);
+            return LoadImage(img);
         }
+
 
         //-R Make Request api
         async static Task<string> GetRequest_s(string RequestURL)
@@ -100,26 +98,22 @@ namespace DataAccess
             }
             return s_content;
         }
-
-        //private static BitmapImage LoadImage(byte[] imageData)
-        //{
-        //    if (imageData == null || imageData.Length == 0) return null;
-        //    var image = new BitmapImage();
-        //    using (var mem = new MemoryStream(imageData))
-        //    {
-        //        mem.Position = 0;
-        //        image.BeginInit();
-        //        image.CreateOptions = BitmapCreateOptions.PreservePixelFormat;
-        //        image.CacheOption = BitmapCacheOption.OnLoad;
-        //        image.UriSource = null;
-        //        image.StreamSource = mem;
-        //        image.EndInit();
-        //    }
-        //    image.Freeze();
-        //    return image;
-        //}
-    
-    
-    
+        private static BitmapImage LoadImage(byte[] imageData)
+        {
+            if (imageData == null || imageData.Length == 0) return null;
+            var image = new BitmapImage();
+            using (var mem = new MemoryStream(imageData))
+            {
+                mem.Position = 0;
+                image.BeginInit();
+                image.CreateOptions = BitmapCreateOptions.PreservePixelFormat;
+                image.CacheOption = BitmapCacheOption.OnLoad;
+                image.UriSource = null;
+                image.StreamSource = mem;
+                image.EndInit();
+            }
+            image.Freeze();
+            return image;
+        }
     }
 }

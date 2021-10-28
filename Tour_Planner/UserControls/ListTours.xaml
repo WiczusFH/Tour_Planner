@@ -20,8 +20,6 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="0.375*"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="0.375*"/>
                                     <ColumnDefinition Width="0.375*"/>
                                     <ColumnDefinition Width="0.375*"/>
                                 </Grid.ColumnDefinitions>
@@ -32,26 +30,16 @@
                                     <TextBlock Text="{Binding distance, StringFormat='{}{0}km'}"/>
                                 </Border>
                                 <Border Grid.Column="2" BorderBrush="DarkGray" BorderThickness="2">
-                                    <TextBlock Text="{Binding dateString}"/>
-                                </Border>
-
-                                <Border Grid.Column="3" BorderBrush="DarkGray" BorderThickness="2">
                                     <Button
-                                    DataContext="{Binding RelativeSource={RelativeSource AncestorType=StackPanel},
-                                     Path=DataContext}" Command="{Binding showLogMapCommand}" 
+                                    DataContext="{Binding RelativeSource={RelativeSource AncestorType=StackPanel, AncestorLevel=2},
+                                     Path=DataContext}" Command="{Binding showMapCommand}" 
                                         CommandParameter="{Binding Path=(ItemsControl.AlternationIndex), 
                                        RelativeSource={RelativeSource TemplatedParent}, 
                                         StringFormat={}Index is {0}}">
                                         Show
                                     </Button>
                                 </Border>
-                                <Border Grid.Column="4" BorderBrush="DarkGray" BorderThickness="2">
-                                    <Button >
-                                        Edit
-                                    </Button>
-                                </Border>
-
-                                <Border Grid.Column="5" BorderBrush="DarkGray" BorderThickness="2">
+                                <Border Grid.Column="3" BorderBrush="DarkGray" BorderThickness="2">
                                     <Button >
                                         Del
                                     </Button>

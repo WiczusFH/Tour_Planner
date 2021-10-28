@@ -5,9 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using Model;
+using System.ComponentModel;
+
 namespace ViewModel
 {
-    public class MapViewModel
+    public class MapViewModel : Observable
     {
         #region Singleton
         public Observable observable = new Observable();
@@ -16,15 +18,15 @@ namespace ViewModel
         public static MapViewModel address { get { return _address;} }
         Repository repository = Repository.address;
         private MapViewModel() {
-            updateMap(-1);
+
+            repository.observable.PropertyChanged += (s, e) =>
+            {
+                map = repository.displayedImage;
+            };
         }
         #endregion
-        public BitmapImage map { get; private set; }
+        BitmapImage _map;
+        public BitmapImage map { get { return _map; } private set { _map = value; OnPropertyChanged("map");} }
 
-        public void updateMap(int id)
-        {
-            map = repository.getImage(id);
-            observable.OnPropertyChanged("map");
-        }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 using log4net;
-
+using System.Reflection;
 namespace ViewModel
 {
     public class MainViewModel
@@ -18,6 +18,7 @@ namespace ViewModel
         public MainViewModel()
         {
             Log.Info("Instantiated. ");
+
         }
 
     }

@@ -10,7 +10,6 @@ namespace Model
         public string routeInformation { get; set; }
         public float distance { get; set; }
         
-        public BitmapImage image { get; set; }
         public string startLocation { get; set; }
         public string endLocation { get; set; }
 

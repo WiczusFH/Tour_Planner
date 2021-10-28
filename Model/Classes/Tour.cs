@@ -9,13 +9,12 @@ namespace Model
 {
     public class Tour : ITour
     {
-        public Tour(string name, string routeDescription, string routeInformation, float distance, BitmapImage image, string startLocation, string endLocation)
+        public Tour(string name, string routeDescription, string routeInformation, float distance, string startLocation, string endLocation)
         {
             this.name = name;
             this.routeDescription = routeDescription;
             this.routeInformation = routeInformation;
             this.distance = distance;
-            this.image = image;
             this.startLocation = startLocation;
             this.endLocation = endLocation;
         }
@@ -24,7 +23,6 @@ namespace Model
         public string routeDescription { get; set; }
         public string routeInformation { get; set; }
         public float distance { get; set; }
-        public BitmapImage image { get; set; }
         public string startLocation { get; set; }
         public string endLocation { get; set; }
 

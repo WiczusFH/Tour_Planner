@@ -2,13 +2,13 @@
 using log4net;
 using Model;
 using System.ComponentModel;
+using System.Text;
 
 namespace ViewModel
 {
-    public class AddToursViewModel
+    public class AddToursViewModel : Observable
     {
         #region Singleton
-        public Observable observable = new Observable();
         public NotifyUser notifyUser = new NotifyUser();
 
         private static AddToursViewModel _address = new AddToursViewModel();
@@ -30,6 +30,7 @@ namespace ViewModel
         public string inputEndLocation { get { return _inputEndLocation; } set { _inputEndLocation = value; SearchAddressCommand.RaiseCanExecuteChanged(); AddTourCommand.RaiseCanExecuteChanged(); } }
         public RelayCommand AddTourCommand { get; }
         public RelayCommand SearchAddressCommand { get; }
+        Repository repository = Repository.address;
         #endregion
 
         #region Constructor
@@ -65,11 +66,25 @@ namespace ViewModel
         #region Button Actions
         public void searchTour()
         {
-            throw new NotImplementedException();
+            if (!String.IsNullOrEmpty(inputStartLocation) && !String.IsNullOrEmpty(inputEndLocation))
+            {
+                string[] locations = { inputStartLocation, inputEndLocation };
+                repository.updateCoords(inputStartLocation, inputEndLocation );
+            }
+            if (!String.IsNullOrEmpty(inputStartLocation) && String.IsNullOrEmpty(inputEndLocation))
+            {
+                string[] locations = { inputStartLocation, inputStartLocation };
+                repository.updateCoords(inputStartLocation, inputStartLocation);
+            }
+            if (String.IsNullOrEmpty(inputStartLocation) && !String.IsNullOrEmpty(inputEndLocation))
+            {
+                string[] locations = { inputEndLocation, inputEndLocation };
+                repository.updateCoords(inputEndLocation, inputEndLocation);
+            }
         }
-        public async void addTour()
+        public void addTour()
         {
-            throw new NotImplementedException();
+            repository.addTour(inputName,inputDescription,inputInformation,inputStartLocation,inputEndLocation);
         }
         #endregion
     }

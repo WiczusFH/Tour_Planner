@@ -13,8 +13,7 @@
           "Model": "1.0.0",
           "Newtonsoft.Json": "13.0.1",
           "System.Drawing.Common": "5.0.2",
-          "log4net": "2.0.12",
-          "PresentationCore": "4.0.0.0"
+          "log4net": "2.0.12"
         },
         "runtime": {
           "ViewModel.dll": {}
@@ -74,12 +73,6 @@
         "dependencies": {
           "System.Security.Cryptography.ProtectedData": "4.5.0",
           "System.Security.Permissions": "4.5.0"
-        },
-        "runtime": {
-          "lib/netstandard2.0/System.Configuration.ConfigurationManager.dll": {
-            "assemblyVersion": "4.0.1.0",
-            "fileVersion": "4.6.26515.6"
-          }
         }
       },
       "System.Drawing.Common/5.0.2": {
@@ -114,31 +107,10 @@
           "System.Security.Principal.Windows": "4.5.0"
         }
       },
-      "System.Security.Cryptography.ProtectedData/4.5.0": {
-        "runtime": {
-          "lib/netstandard2.0/System.Security.Cryptography.ProtectedData.dll": {
-            "assemblyVersion": "4.0.3.0",
-            "fileVersion": "4.6.26515.6"
-          }
-        },
-        "runtimeTargets": {
-          "runtimes/win/lib/netstandard2.0/System.Security.Cryptography.ProtectedData.dll": {
-            "rid": "win",
-            "assetType": "runtime",
-            "assemblyVersion": "4.0.3.0",
-            "fileVersion": "4.6.26515.6"
-          }
-        }
-      },
+      "System.Security.Cryptography.ProtectedData/4.5.0": {},
       "System.Security.Permissions/4.5.0": {
         "dependencies": {
           "System.Security.AccessControl": "4.5.0"
-        },
-        "runtime": {
-          "lib/netstandard2.0/System.Security.Permissions.dll": {
-            "assemblyVersion": "4.0.1.0",
-            "fileVersion": "4.6.26515.6"
-          }
         }
       },
       "System.Security.Principal.Windows/4.5.0": {
@@ -177,78 +149,6 @@
         },
         "runtime": {
           "Model.dll": {}
-        }
-      },
-      "PresentationCore/4.0.0.0": {
-        "runtime": {
-          "PresentationCore.dll": {
-            "assemblyVersion": "4.0.0.0",
-            "fileVersion": "4.0.30319.18020"
-          }
-        }
-      },
-      "UIAutomationProvider/4.0.0.0": {
-        "runtime": {
-          "UIAutomationProvider.dll": {
-            "assemblyVersion": "4.0.0.0",
-            "fileVersion": "4.0.30319.18020"
-          }
-        }
-      },
-      "System.Xaml/4.0.0.0": {
-        "runtime": {
-          "System.Xaml.dll": {
-            "assemblyVersion": "4.0.0.0",
-            "fileVersion": "4.0.30319.18020"
-          }
-        }
-      },
-      "UIAutomationTypes/4.0.0.0": {
-        "runtime": {
-          "UIAutomationTypes.dll": {
-            "assemblyVersion": "4.0.0.0",
-            "fileVersion": "4.0.30319.18020"
-          }
-        }
-      },
-      "System.Windows.Input.Manipulations/4.0.0.0": {
-        "runtime": {
-          "System.Windows.Input.Manipulations.dll": {
-            "assemblyVersion": "4.0.0.0",
-            "fileVersion": "4.0.30319.18020"
-          }
-        }
-      },
-      "System.Deployment/4.0.0.0": {
-        "runtime": {
-          "System.Deployment.dll": {
-            "assemblyVersion": "4.0.0.0",
-            "fileVersion": "4.0.30319.18020"
-          }
-        }
-      },
-      "System.Windows.Forms/4.0.0.0": {
-        "runtime": {
-          "System.Windows.Forms.dll": {
-            "assemblyVersion": "4.0.0.0",
-            "fileVersion": "4.0.30319.18020"
-          }
-        }
-      },
-      "Accessibility/4.0.0.0": {
-        "runtime": {
-          "Accessibility.dll": {
-            "assemblyVersion": "4.0.0.0",
-            "fileVersion": "4.0.30319.18020"
-          }
-        }
-      },
-      "System.Runtime.Serialization.Formatters.Soap/4.0.0.0": {
-        "runtime": {
-          "System.Runtime.Serialization.Formatters.Soap.dll": {
-            "assemblyVersion": "4.0.0.0",
-            "fileVersion": "4.0.30319.18020"
-          }
         }
       }
     }
@@ -355,51 +255,6 @@
     },
     "Model/1.0.0": {
       "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "PresentationCore/4.0.0.0": {
-      "type": "reference",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "UIAutomationProvider/4.0.0.0": {
-      "type": "reference",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "System.Xaml/4.0.0.0": {
-      "type": "reference",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "UIAutomationTypes/4.0.0.0": {
-      "type": "reference",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "System.Windows.Input.Manipulations/4.0.0.0": {
-      "type": "reference",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "System.Deployment/4.0.0.0": {
-      "type": "reference",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "System.Windows.Forms/4.0.0.0": {
-      "type": "reference",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "Accessibility/4.0.0.0": {
-      "type": "reference",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "System.Runtime.Serialization.Formatters.Soap/4.0.0.0": {
-      "type": "reference",
       "serviceable": false,
       "sha512": ""
     }
