@@ -11,8 +11,8 @@ namespace Model
         public float distance { get; set; }
         
         public BitmapImage image { get; set; }
-        public ILocation startLocation { get; set; }
-        public ILocation endLocation { get; set; }
+        public string startLocation { get; set; }
+        public string endLocation { get; set; }
 
 
 

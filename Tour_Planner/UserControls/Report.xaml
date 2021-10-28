@@ -7,12 +7,15 @@
              xmlns:viewModel="clr-namespace:ViewModel;assembly=ViewModel"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <!--<UserControl.DataContext>
+        <viewModel:MainViewModel/>
+    </UserControl.DataContext>-->
     <StackPanel DataContext="{Binding reportViewModel}">
         <Label>Route Name:</Label>
-        <ComboBox Width="Auto" ItemsSource="{Binding tourlist.tours}" DisplayMemberPath="route_title"
-                  SelectedValuePath="route_title"
+        <ComboBox Width="Auto" ItemsSource="{Binding tourList}" DisplayMemberPath="name"
+                  SelectedValuePath="name"
                   SelectedValue="{Binding inputRouteName}">
         </ComboBox>
-        <Button Command="{Binding generatePDFButton}">Generate PDF</Button>
+        <Button Command="{Binding generateReportCommand}">Generate PDF</Button>
     </StackPanel>
 </UserControl>

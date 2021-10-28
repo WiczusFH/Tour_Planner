@@ -15,13 +15,14 @@ namespace ViewModel
         private static ListTourViewModel _address = new ListTourViewModel();
         public static ListTourViewModel address { get { return _address; } }
         #endregion
-        public List<Model.ITour> routeList { get; } = new List<Model.ITour>();
+        Repository repository = Repository.address;
+        public List<Model.ITour> routeList { get; private set; }
 
         private ListTourViewModel()
         {
-            //Dummy Data Start 
-            routeList.Add(new Tour("My Route", "Route Description", "Route Information", 25, null, null, null));
-            //Dummy Data End 
+            repository.observable.PropertyChanged += (s,e) => { routeList = repository.tourList; this.observable.OnPropertyChanged("routeList"); };
+            repository.setTours();
+            //Console.WriteLine(routeList[0].distance);
         }
     }
 }

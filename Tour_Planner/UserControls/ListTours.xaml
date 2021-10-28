@@ -7,9 +7,9 @@
              xmlns:viewModel="clr-namespace:ViewModel;assembly=ViewModel"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <UserControl.DataContext>
+    <!--<UserControl.DataContext>
         <viewModel:MainViewModel/>
-    </UserControl.DataContext>
+    </UserControl.DataContext>-->
     <StackPanel Background="White" DataContext="{Binding listTourViewModel}">
         <ItemsControl ItemsSource="{Binding routeList}" AlternationCount="100">
             <ItemsControl.ItemTemplate>

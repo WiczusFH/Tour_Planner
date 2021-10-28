@@ -8,8 +8,11 @@
              
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.DataContext>
+        <viewModel:MainViewModel/>
+    </UserControl.DataContext>
     <Grid>
-        <Image Grid.Column="1" DataContext="{Binding repository}" Source="{Binding displayedImage}" RenderTransformOrigin="0.5,0.5"/>
+        <Image Grid.Column="1" DataContext="{Binding mapViewModel}" Source="{Binding map}" RenderTransformOrigin="0.5,0.5"/>
 
     </Grid>
 </UserControl>

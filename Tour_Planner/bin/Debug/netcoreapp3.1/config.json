@@ -1,0 +1,8 @@
+{
+  "host": "localhost",
+  "username": "postgres",
+  "password": "2553oskar",
+  "database": "postgres",
+  "mapQuestKey": "A9eUIpBG0ggNcTVLLdRPn9HPPGIlCSyN",
+  "mapQuestURL": "https://www.mapquestapi.com"
+}  

@@ -8,20 +8,20 @@
              
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <UserControl.DataContext>
+    <!--<UserControl.DataContext>
         <viewModel:MainViewModel/>
-    </UserControl.DataContext>
+    </UserControl.DataContext>-->
     <StackPanel Background="White" DataContext="{Binding addLogsViewModel}">
         <TextBlock TextAlignment="Center">New Tour</TextBlock>
         <Label>Log Title: </Label>
         <TextBox x:Name="NewLogTitle" Text="{Binding inputLogTitle}" Width="Auto"/>
         <Label>Route Name:</Label>
-        <ComboBox Width="Auto" ItemsSource="{Binding tourlist.tours}" DisplayMemberPath="route_title"
-                  SelectedValuePath="route_title"
+        <ComboBox Width="Auto" ItemsSource="{Binding tourList}" DisplayMemberPath="name"
+                  SelectedValuePath="name"
                   SelectedValue="{Binding inputRouteName}">
         </ComboBox>
         <Label>Date:</Label>
-        <TextBox x:Name="NewLogDate" Text="{Binding inputDate}" Width="Auto"/>
+        <TextBox x:Name="NewLogDate" Text="{Binding name}" Width="Auto"/>
         <Label>Duration:</Label>
         <TextBox x:Name="NewLogDuration" Text="{Binding inputDuration}" Width="Auto"/>
 

@@ -46,6 +46,10 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "dependencies": {
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.1, )"
+            },
             "System.Drawing.Common": {
               "target": "Package",
               "version": "[5.0.2, )"
@@ -116,6 +120,14 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "dependencies": {
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.1, )"
+            },
+            "Npgsql": {
+              "target": "Package",
+              "version": "[5.0.10, )"
+            },
             "System.Drawing.Common": {
               "target": "Package",
               "version": "[5.0.2, )"
@@ -174,6 +186,12 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
+              "C:\\Users\\Oskar\\source\\repos\\Tour_Planner\\Business\\Business.csproj": {
+                "projectPath": "C:\\Users\\Oskar\\source\\repos\\Tour_Planner\\Business\\Business.csproj"
+              },
+              "C:\\Users\\Oskar\\source\\repos\\Tour_Planner\\DataAccess\\DataAccess.csproj": {
+                "projectPath": "C:\\Users\\Oskar\\source\\repos\\Tour_Planner\\DataAccess\\DataAccess.csproj"
+              },
               "C:\\Users\\Oskar\\source\\repos\\Tour_Planner\\Model\\Model.csproj": {
                 "projectPath": "C:\\Users\\Oskar\\source\\repos\\Tour_Planner\\Model\\Model.csproj"
               }
@@ -190,6 +208,10 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "dependencies": {
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.1, )"
+            },
             "System.Drawing.Common": {
               "target": "Package",
               "version": "[5.0.2, )"
@@ -267,6 +289,10 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "dependencies": {
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.1, )"
+            },
             "System.Drawing.Common": {
               "target": "Package",
               "version": "[5.0.2, )"

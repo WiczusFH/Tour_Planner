@@ -8,9 +8,9 @@
              
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <UserControl.DataContext>
+    <!--<UserControl.DataContext>
         <viewModel:MainViewModel/>
-    </UserControl.DataContext>
+    </UserControl.DataContext>-->
     <StackPanel Background="White" DataContext="{Binding addToursViewModel}">
         <TextBlock TextAlignment="Center">New Tour</TextBlock>
         <Label>Title:</Label>

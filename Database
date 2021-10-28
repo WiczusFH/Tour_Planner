@@ -1,0 +1,26 @@
+CREATE TABLE tours (
+    tour_id SERIAL PRIMARY KEY,
+    name varchar(48),
+    sl_location_name varchar(32),
+    sl_location_x decimal,
+    sl_location_y decimal,
+    el_location_name varchar(32),
+    el_location_x decimal,
+    el_location_y decimal,
+    distance decimal,
+    description varchar(128),
+    information varchar(128)
+);
+
+CREATE TABLE logs (
+    log_id SERIAL PRIMARY KEY,
+    name varchar(48),
+    route_id int,
+    date DATE,
+    report varchar(256),
+    duration decimal,
+    averageSpeed decimal,
+    topSpeed decimal,
+    calories decimal,
+    rating int
+);

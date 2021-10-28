@@ -47,3 +47,5 @@ C:\Users\Oskar\source\repos\Tour_Planner\Tour_Planner\obj\Debug\netcoreapp3.1\Vi
 C:\Users\Oskar\source\repos\Tour_Planner\Tour_Planner\obj\Debug\netcoreapp3.1\View.pdb
 C:\Users\Oskar\source\repos\Tour_Planner\Tour_Planner\obj\Debug\netcoreapp3.1\View.genruntimeconfig.cache
 C:\Users\Oskar\source\repos\Tour_Planner\Tour_Planner\bin\Debug\netcoreapp3.1\View.dll.config
+C:\Users\Oskar\source\repos\Tour_Planner\Tour_Planner\bin\Debug\netcoreapp3.1\Npgsql.dll
+C:\Users\Oskar\source\repos\Tour_Planner\Tour_Planner\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
