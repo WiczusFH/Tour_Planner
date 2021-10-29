@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Tour_Planner"
-        xmlns:usrcntr="clr-namespace:Tour_Planner_3.View.UserControls"
+        xmlns:usrcntr="clr-namespace:Tour_Planner.View.UserControls"
         xmlns:viewModel="clr-namespace:ViewModel;assembly=ViewModel"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
@@ -25,6 +25,9 @@
                         </TabItem>
                         <TabItem Header="Add Route">
                             <usrcntr:AddTour/>
+                        </TabItem>
+                        <TabItem Header="Modify Route">
+                            <usrcntr:ModifyTour/>
                         </TabItem>
                         <TabItem Header="Report">
                             <usrcntr:Report/>
@@ -48,6 +51,12 @@
                             </TabItem>
                             <TabItem Header="Add Logs">
                                 <usrcntr:AddLog/>
+                            </TabItem>
+                            <TabItem Header="Modify Logs">
+                                <usrcntr:ModifyLog/>
+                            </TabItem>
+                            <TabItem Header="Report">
+                                <usrcntr:LogReport/>
                             </TabItem>
                         </TabControl>
                     </Border>

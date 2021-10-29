@@ -1,9 +1,9 @@
-﻿<UserControl x:Class="Tour_Planner_3.View.UserControls.AddLog"
+﻿<UserControl x:Class="Tour_Planner.View.UserControls.AddLog"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Tour_Planner_3.View.UserControls"
+             xmlns:local="clr-namespace:Tour_Planner.View.UserControls"
              xmlns:viewModel="clr-namespace:ViewModel;assembly=ViewModel"
              
              mc:Ignorable="d" 
@@ -12,7 +12,7 @@
         <viewModel:MainViewModel/>
     </UserControl.DataContext>-->
     <StackPanel Background="White" DataContext="{Binding addLogsViewModel}">
-        <TextBlock TextAlignment="Center">New Tour</TextBlock>
+        <TextBlock TextAlignment="Center">New Log</TextBlock>
         <Label>Log Title: </Label>
         <TextBox x:Name="NewLogTitle" Text="{Binding inputLogTitle}" Width="Auto"/>
         <Label>Route Name:</Label>
@@ -21,10 +21,15 @@
                   SelectedValue="{Binding inputRouteName}">
         </ComboBox>
         <Label>Date:</Label>
-        <TextBox x:Name="NewLogDate" Text="{Binding name}" Width="Auto"/>
+        <TextBox x:Name="NewLogDate" Text="{Binding inputDate}" Width="Auto"/>
         <Label>Duration:</Label>
         <TextBox x:Name="NewLogDuration" Text="{Binding inputDuration}" Width="Auto"/>
-
+        <Label>Top Speed:</Label>
+        <TextBox x:Name="TopSpeed" Text="{Binding topSpeed}" Width="Auto"/>
+        <Label>Report:</Label>
+        <TextBox x:Name="Report" Text="{Binding report}" Width="Auto"/>
+        <Label>Rating:</Label>
+        <TextBox x:Name="Rating" Text="{Binding rating}" Width="Auto"/>
         <Button Command="{Binding addLogCommand}">Confirm</Button>
     </StackPanel>
 </UserControl>

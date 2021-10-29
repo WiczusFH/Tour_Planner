@@ -9,22 +9,36 @@ using System.ComponentModel;
 
 namespace ViewModel
 {
-    public class ListLogsViewModel
+    public class ListLogsViewModel : Observable
     {
         #region Singleton
-        public Observable observable = new Observable();
         public NotifyUser notifyUser = new NotifyUser();
 
         private static ListLogsViewModel _address = new ListLogsViewModel();
         public static ListLogsViewModel address { get { return _address; } }
         #endregion
+        public RelayCommandObj updateMapCommand { get; }
+        public RelayCommandObj deleteLogCommand { get; }
+
         Repository repository = Repository.address;
-        public List<Model.ILog> logList { get; } = new List<Model.ILog>();
+        public List<Model.ILog> logList { get; private set; } = new List<Model.ILog>();
 
         private ListLogsViewModel() {
             logList = repository.logList;
+            repository.observable.PropertyChanged += (s, e) => { logList = new List<Model.ILog>(repository.logList); this.OnPropertyChanged("logList"); };
+            updateMapCommand = new RelayCommandObj(updateMap, (obj) => { return true; });
+            deleteLogCommand = new RelayCommandObj(deleteRoute, (obj) => { return true; });
         }
-
+        void updateMap(object obj)
+        {
+            int logIndex = Int32.Parse(obj.ToString());
+            repository.setImageFromLogId(logIndex);
+        }
+        void deleteRoute(object obj)
+        {
+            int logIndex = Int32.Parse(obj.ToString());
+            repository.removeLog(logIndex);
+        }
 
 
     }

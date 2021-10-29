@@ -48,6 +48,10 @@ namespace DataAccess
 
         public void DefineParameter(DbCommand command, string name, DbType type, object value) {
             int index = DeclareParameter(command, name, type);
+            if (value == null)
+            {
+                value = "";
+            }
             command.Parameters[index].Value = value;
         }
 

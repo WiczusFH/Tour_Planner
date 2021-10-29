@@ -1,0 +1,28 @@
+﻿<UserControl x:Class="Tour_Planner.View.UserControls.ModifyTour"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Tour_Planner.View.UserControls"
+             xmlns:viewModel="clr-namespace:ViewModel;assembly=ViewModel"
+             
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <!--<UserControl.DataContext>
+        <viewModel:MainViewModel/>
+    </UserControl.DataContext>-->
+    <StackPanel Background="White" DataContext="{Binding modifyTourViewModel}">
+        <Label>Route Name:</Label>
+        <ComboBox Width="Auto" ItemsSource="{Binding tourList}" DisplayMemberPath="name"
+                  SelectedValuePath="name"
+                  SelectedValue="{Binding inputRouteName}">
+        </ComboBox>
+        <TextBlock TextAlignment="Center">New Tour</TextBlock>
+        <Label>Description:</Label>
+        <TextBox x:Name="NewTourDescription" Text="{Binding newDescription, Mode=TwoWay}"/>
+        <Label>Information:</Label>
+        <TextBox x:Name="NewTourInformation" Text="{Binding newInformation, Mode=TwoWay}"/>
+        <Button Command="{Binding searchCommand}">Show</Button>
+        <Button Command="{Binding modifyCommand}">Confirm</Button>
+    </StackPanel>
+</UserControl>

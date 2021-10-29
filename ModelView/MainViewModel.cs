@@ -12,6 +12,7 @@ namespace ViewModel
         public ListTourViewModel listTourViewModel { get; } = ListTourViewModel.address;
         public ReportViewModel reportViewModel { get; } = ReportViewModel.address;
         public MapViewModel mapViewModel { get; } = MapViewModel.address;
+        public ModifyTourViewModel modifyTourViewModel{ get; } = ModifyTourViewModel.address;
         
         ILog Log = LogManager.GetLogger(typeof(MainViewModel));
 

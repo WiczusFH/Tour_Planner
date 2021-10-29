@@ -9,27 +9,32 @@ namespace Model
 {
     public class Date : IDate
     {
+        public bool valid { get; private set; }
         public int day { get; set; }
         public int month { get; set; }
         public int year { get; set; }
 
         public string ToString()
         {
-            StringBuilder sb = new StringBuilder();
-            if (day < 10)
+            if (valid)
             {
-                sb.Append(0);
+                StringBuilder sb = new StringBuilder();
+                if (day < 10)
+                {
+                    sb.Append(0);
+                }
+                sb.Append(day);
+                sb.Append(".");
+                if (month < 10)
+                {
+                    sb.Append(0);
+                }
+                sb.Append(month);
+                sb.Append(".");
+                sb.Append(year);
+                return sb.ToString();
             }
-            sb.Append(day);
-            sb.Append(".");
-            if (month < 10)
-            {
-                sb.Append(0);
-            }
-            sb.Append(month);
-            sb.Append(".");
-            sb.Append(year);
-            return sb.ToString();
+            return "";
         }
 
         public enum months
@@ -47,16 +52,31 @@ namespace Model
             November,
             December
         }
+        public Date()
+        {
+            valid = false;
+        }
         public Date(int day, int month, int year)
         {
             this.day = day;
             this.month = month;
             this.year = year;
+            if(day>=1 && day<=31 && month>=1 && month <= 12)
+            {
+                valid = true;
+            } else
+            {
+                valid = false;
+            }
         }
         public static Date fromString(string input)
         {
-            string[] dotFormat = input.Split('.');
+            if (string.IsNullOrEmpty(input))
+            {
+                return new Date();
+            }
 
+            string[] dotFormat = input.Split('.');
             if (dotFormat.Length == 3)
             {
                 if (dotFormat[0].Length == 4)

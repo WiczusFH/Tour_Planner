@@ -1,9 +1,9 @@
-﻿<UserControl x:Class="Tour_Planner_3.View.UserControls.UserLogs"
+﻿<UserControl x:Class="Tour_Planner.View.UserControls.UserLogs"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Tour_Planner_3.View.UserControls"
+             xmlns:local="clr-namespace:Tour_Planner.View.UserControls"
              xmlns:viewModel="clr-namespace:ViewModel;assembly=ViewModel"
              
              mc:Ignorable="d" 
@@ -24,7 +24,6 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="0.375*"/>
                                 <ColumnDefinition Width="0.375*"/>
-                                <ColumnDefinition Width="0.375*"/>
                             </Grid.ColumnDefinitions>
                             <Border Grid.Column="0" BorderBrush="DarkGray" BorderThickness="2">
                                 <TextBlock Text="{Binding logTitle}"/>
@@ -38,8 +37,8 @@
 
                             <Border Grid.Column="3" BorderBrush="DarkGray" BorderThickness="2">
                                 <Button
-                                    DataContext="{Binding RelativeSource={RelativeSource AncestorType=StackPanel},
-                                     Path=DataContext}" Command="{Binding showLogMapCommand}" 
+                                    DataContext="{Binding RelativeSource={RelativeSource AncestorType=StackPanel, AncestorLevel=2},
+                                     Path=DataContext}" Command="{Binding updateMapCommand}" 
                                         CommandParameter="{Binding Path=(ItemsControl.AlternationIndex), 
                                        RelativeSource={RelativeSource TemplatedParent}, 
                                         StringFormat={}Index is {0}}">
@@ -47,16 +46,15 @@
                                 </Button>
                             </Border>
                             <Border Grid.Column="4" BorderBrush="DarkGray" BorderThickness="2">
-                                <Button >
-                                    Edit
-                                </Button>
-                            </Border>
-
-                            <Border Grid.Column="5" BorderBrush="DarkGray" BorderThickness="2">
-                                <Button >
-                                    Del
-                                </Button>
-                            </Border>
+                                    <Button
+                                    DataContext="{Binding RelativeSource={RelativeSource AncestorType=StackPanel, AncestorLevel=2},
+                                     Path=DataContext}" Command="{Binding deleteLogCommand}" 
+                                        CommandParameter="{Binding Path=(ItemsControl.AlternationIndex), 
+                                       RelativeSource={RelativeSource TemplatedParent}, 
+                                        StringFormat={}Index is {0}}">
+                                        Delete
+                                    </Button>
+                                </Border>
 
                         </Grid>
                         <Grid>
@@ -71,22 +69,22 @@
                             <!-- duration, distance, average Speed, topSpeed, calories,report-->
 
                             <Border Grid.Column="0" BorderBrush="DarkGray" BorderThickness="2">
-                                <TextBlock Text="{Binding duration, StringFormat='{}{0} h'}"/>
+                                <TextBlock Text="{Binding durationString}"/>
                             </Border>
                             <Border Grid.Column="1" BorderBrush="DarkGray" BorderThickness="2">
-                                <TextBlock Text="{Binding distance, StringFormat='{}{0} km'}"/>
+                                <TextBlock Text="{Binding distance}"/>
                             </Border>
                             <Border Grid.Column="2" BorderBrush="DarkGray" BorderThickness="2">
-                                <TextBlock Text="{Binding averageSpeed, StringFormat='{}{0} km/h'}"/>
+                                <TextBlock Text="{Binding averageSpeedString}"/>
                             </Border>
                             <Border Grid.Column="3" BorderBrush="DarkGray" BorderThickness="2">
-                                <TextBlock Text="{Binding topSpeed, StringFormat='{}{0} km/h'}"/>
+                                <TextBlock Text="{Binding topSpeedString}"/>
                             </Border>
                             <Border Grid.Column="4" BorderBrush="DarkGray" BorderThickness="2">
-                                <TextBlock Text="{Binding calories, StringFormat='{}{0} kcal'}"/>
+                                <TextBlock Text="{Binding caloriesString}"/>
                             </Border>
                             <Border Grid.Column="5" BorderBrush="DarkGray" BorderThickness="2">
-                                <TextBlock Text="{Binding rating, StringFormat='{}{0}/5'}"/>
+                                <TextBlock Text="{Binding ratingString}"/>
                             </Border>
                             </Grid>
                         <Border BorderBrush="DarkGray" BorderThickness="2">

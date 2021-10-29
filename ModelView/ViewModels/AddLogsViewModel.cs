@@ -12,9 +12,8 @@ using System.Collections.ObjectModel;
 
 namespace ViewModel
 {
-    public class AddLogsViewModel {
+    public class AddLogsViewModel : Observable {
         #region Singleton
-        public Observable observable = new Observable();
         public NotifyUser notifyUser = new NotifyUser();
         private static AddLogsViewModel _address = new AddLogsViewModel();
         public static AddLogsViewModel address { get { return _address; } }
@@ -29,20 +28,24 @@ namespace ViewModel
 
         public string inputDate { get; set; }
         public string inputDuration { get; set; }
+        public string report { get; set; }
+        public string topSpeed { get; set; }
+        public string rating { get; set; }
         public RelayCommand addLogCommand { get; }
 
         Repository repository = Repository.address;
-        ObservableCollection<ITour> _tourList;
-        public ObservableCollection<ITour> tourList { get { return _tourList;  } set { _tourList=value; observable.OnPropertyChanged("tourList"); } }
+        List<ITour> _tourList;
+        public List<ITour> tourList { get { return _tourList;  } set { _tourList = new List<Model.ITour>(repository.tourList); OnPropertyChanged("tourList"); } }
         #endregion
 
         #region Constructor
         private AddLogsViewModel()
         {
-            tourList = new ObservableCollection<ITour>(repository.tourList);
+            tourList = repository.tourList;
             log = LogManager.GetLogger(GetType());
             log.Info("Tours View Model instantiated. ");
             addLogCommand = new RelayCommand(addLog, addLogPredicate);
+            repository.observable.PropertyChanged += (s, e) => { tourList = repository.tourList; OnPropertyChanged("tourList"); };
 
         }
         #endregion
@@ -62,7 +65,7 @@ namespace ViewModel
         #region Button Actions
         public async void addLog()
         {
-            throw new NotImplementedException();
+            repository.addLog(inputLogTitle, inputRouteName, inputDuration, inputDate,report,rating,topSpeed);
         }
         #endregion
 

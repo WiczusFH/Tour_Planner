@@ -3,6 +3,7 @@ using log4net;
 using Model;
 using System.ComponentModel;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace ViewModel
 {
@@ -18,21 +19,22 @@ namespace ViewModel
         Repository repository = Repository.address;
         public List<Model.ITour> routeList { get; private set; }
         public RelayCommandObj showMapCommand { get; }
-
+        public RelayCommandObj deleteRouteCommand { get; }
         private ListTourViewModel()
         {
-            repository.observable.PropertyChanged += (s,e) => { routeList = repository.tourList; OnPropertyChanged("routeList"); };
-            repository.setTours();
-            showMapCommand = new RelayCommandObj(updateMap, showMapPredicate);
-        }
-
-        bool showMapPredicate(object obj)
-        {
-            return true;
+            routeList = repository.tourList;
+            repository.observable.PropertyChanged += (s, e) => { routeList = new List<Model.ITour>(repository.tourList); OnPropertyChanged("routeList"); };
+            showMapCommand = new RelayCommandObj(updateMap, (obj)=> { return true; });
+            deleteRouteCommand = new RelayCommandObj(deleteRoute, (obj) => { return true; });
         }
         void updateMap(object obj) {
             int tourIndex = Int32.Parse(obj.ToString());
-            repository.setImageFromId(tourIndex);
+            repository.setImageFromTourId(tourIndex);
+        }
+        void deleteRoute(object obj)
+        {
+            int tourIndex = Int32.Parse(obj.ToString());
+            repository.removeTour(tourIndex);
         }
 
     }

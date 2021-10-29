@@ -20,137 +20,75 @@ namespace Model
         #region Dependencies
         public DataManager dataManager = new DataManager();
         public ImageLoader imageLoader = new ImageLoader();
+        DataAccessModelConverter dataAccessModelConverter = new DataAccessModelConverter();
+
         #endregion
         #region Variables
         public List<Model.ILog> logList { get; private set; } = new List<Model.ILog>();
         public List<Model.ITour> tourList { get; private set; } = new List<Model.ITour>();
         public List<DataAccess.ITour> tourListDB { get; private set; } = new List<DataAccess.ITour>();
         public List<DataAccess.ILog> logListDB { get; private set; } = new List<DataAccess.ILog>();
+        log4net.ILog Logging = LogManager.GetLogger(typeof(Repository));
+
 
         BitmapImage _displayedImage;
-        public BitmapImage displayedImage { get { return _displayedImage; } private set { _displayedImage = value; observable.OnPropertyChanged("map");} }
-        public float[] currentCoords { get; private set; }
+        public BitmapImage displayedImage { get { return _displayedImage; } private set { _displayedImage = value; observable.OnPropertyChanged("map"); } }
+
+
+
+        //public float[] currentCoords { get; private set; }
         #endregion
         private Repository() {
             Configuration configuration = Configuration.address;
-            DataManager dataManager = new DataManager();
-            setTours();
-            setLogs();
+            loadTourLogData();
         }
 
-        public void setLogs()
+        //Initialise From Database
+        public void loadTourLogData()
         {
             tourListDB = dataManager.GetTours();
             logListDB = dataManager.GetLogs();
-            convertLog_DB2Model();
+            tourList = dataAccessModelConverter.tourListModel(tourListDB);
+            logList = dataAccessModelConverter.logListModel(logListDB, tourListDB, tourList);
+            observable.OnPropertyChanged("LogTourData");
+        }
+        //CRUD Log
+        public void addLog(string inputLogTitle, string inputRouteName, string inputDuration, string inputDate, string report, string inputrating, string inputtopspeed)
+        {
+            Model.Log log = Log.fromStringInput(inputLogTitle, inputRouteName, inputDuration, inputDate, report, inputrating, inputtopspeed, tourList);
+            logList.Add(log);
+            DataAccess.Log logToInsertDB = dataAccessModelConverter.logDA(log);
+            logToInsertDB.route_id = tourIDFromName(tourListDB, inputRouteName);
+            logListDB.Add(logToInsertDB);
+            dataManager.insertLog(logToInsertDB);
+            observable.OnPropertyChanged("LogTourData");
         }
 
-        public void setTours()
+        public void modifyLog() //-R
         {
-            tourListDB=dataManager.GetTours();
-            convertTour_DB2Model();
-        }
-        
-        void convertTour_DB2Model()
-        {
-            tourList = new List<ITour>();
-            foreach (DataAccess.ITour tour in tourListDB)
-            {
-                tourList.Add(new Model.Tour(tour.name,tour.routeDescription,tour.routeInformation,tour.distance, tour.sl_name, tour.el_name)); 
-            }
-
-            observable.OnPropertyChanged("tourList");
-        }
-        
-        void convertLog_DB2Model()
-        {
-            logList = new List<ILog>();
-            foreach (DataAccess.ILog log in logListDB)
-            {
-                Model.Tour tour = findTour(log.route_id);
-                if (tour != null)
-                {
-                    logList.Add(new Model.Log(log.logTitle, log.duration, Date.fromString(log.date), tour,
-                        log.report, log.rating, log.averageSpeed, log.topSpeed, log.calories));
-                }
-            }
-
-            observable.OnPropertyChanged("logList");
-        }
-        
-        Model.Tour findTour(int id)
-        {
-            foreach (DataAccess.ITour tour in tourListDB)
-            {
-                if (tour.id == id)
-                {
-                    return new Model.Tour(tour.name, tour.routeDescription, tour.routeInformation, tour.distance, tour.sl_name, tour.el_name); 
-                }
-            }
-            return null;
+            throw new NotImplementedException();
         }
 
-        public void setImageFromId(int id) //-R String generation in DA
+        public void removeLog(int logIndex)
         {
-            StringBuilder sb = new StringBuilder();
-            if (id == -1)
-            {
-                sb.Append("Images/NOIMAGE.png");
-                displayedImage = imageLoader.getImage(sb.ToString());
-                return;
-            }
-            try
-            {
-                sb.Append("Images/");
-                sb.Append(tourList[id].name);
-                sb.Append(".png");
-                displayedImage = imageLoader.getImage(sb.ToString());
-                return;
-            }
-            catch (Exception e)
-            {
-                sb.Append("Images/NOIMAGE.png");
-                displayedImage = imageLoader.getImage(sb.ToString());
-                return;
-            }
-        }
-        public async void setMapImageFromCoords()
-        {
-            try
-            {
-                Mapquest mapquest = new Mapquest();
-                displayedImage = await mapquest.GetMapRouteCoord(currentCoords[0], currentCoords[1], currentCoords[2], currentCoords[3]);
-            }
-            catch (Exception e)
-            {
-
-            }
+            string name = logList[logIndex].logTitle;
+            DataAccess.ILog logToDelete = logFromName(logListDB, name);
+            dataManager.deleteLog(logToDelete.id);
+            logList.RemoveAt(logIndex);
+            logListDB.Remove(logToDelete);
+            observable.OnPropertyChanged("LogTourData");
         }
 
-        public async void updateCoords(string start,string end)
-        {
-            Mapquest mapquest = new Mapquest();
-            float[] coords;
-            try
-            {
-                string[] locations = { start, end };
-                currentCoords = await mapquest.namesToCoord(locations);
-                setMapImageFromCoords();
-            }
-            catch (Exception)
-            {
-            }
-        }
-
-        public async void addTour(string inputName, string inputDescription, string inputInformation, string inputStartLocation, string inputEndLocation) //moveToDataAccess
+        //CRUD Tour
+        public async void addTour(string inputName, string inputDescription, string inputInformation, string inputStartLocation, string inputEndLocation) // -R 
         {
             Mapquest mapquest = new Mapquest();
             string[] locations = { inputStartLocation, inputEndLocation };
             float[] coords = await mapquest.namesToCoord(locations);
             float distance = (float)Math.Pow(Math.Pow(coords[0] - coords[1], 2) + Math.Pow(coords[1] - coords[2], 2), 0.5);
-            //updateCoords(inputStartLocation, inputEndLocation);
+            //await updateCoords(inputStartLocation, inputEndLocation);
             //Add to active list
-            Tour tour=new Tour(inputName, inputDescription, inputInformation, distance, inputStartLocation, inputEndLocation);
+            Tour tour = new Tour(inputName, inputDescription, inputInformation, distance, inputStartLocation, inputEndLocation);
             tourList.Add(tour);
             //Add to Database
             dataManager.insertTour(new DataAccess.Tour(inputName,
@@ -158,8 +96,208 @@ namespace Model
                 inputStartLocation,
                 coords[0],
                 coords[1], inputEndLocation, coords[2], coords[3], -1, inputDescription, inputInformation));
-            //Add image
-            imageLoader.saveImage(await mapquest.GetMapRouteCoord(currentCoords[0], currentCoords[1], currentCoords[2], currentCoords[3]),inputName);
+
+            try
+            {
+                imageLoader.saveImage(await mapquest.GetMapRouteCoord(coords[0], coords[1], coords[2], coords[3]), inputName);
+            }
+            catch (Exception e)
+            {
+                Logging.Error("Couldn't save image. ");
+            }
+            observable.OnPropertyChanged("LogTourData");
+
+        }
+
+
+        public void modifyTour(string inputRouteName, string newDescription, string newInformation)
+        {
+            loadTourLogData();
+            DataAccess.ITour newDBTour = null;
+            Model.ITour newModelTour = null;
+            foreach (DataAccess.ITour tour in tourListDB)
+            {
+                if (tour.name == inputRouteName)
+                {
+                    newDBTour = tour;
+                    break;
+                }
+            }
+            foreach (Model.ITour tour in tourList)
+            {
+                if (tour.name == inputRouteName)
+                {
+                    newModelTour = tour;
+                    break;
+                }
+            }
+            //Update map
+            newDBTour.routeDescription = newDescription;
+            newDBTour.routeInformation = newInformation;
+            newModelTour.routeDescription = newDescription;
+            newModelTour.routeInformation = newInformation;
+            dataManager.modifyTour(newDBTour);
+            observable.OnPropertyChanged("LogTourData");
+
+        }
+
+        public void removeTour(int list_index) // -R also remove image
+        {
+            int id = -1;
+            string name = tourList[list_index].name;
+            DataAccess.ITour tourToDelete = null;
+            foreach (DataAccess.ITour tour in tourListDB)
+            {
+                if (tour.name == name)
+                {
+                    id = tour.id;
+                    tourToDelete = tour;
+                    break;
+                }
+            }
+            dataManager.deleteTour(id);
+            tourList.RemoveAt(list_index);
+            tourListDB.Remove(tourToDelete);
+            observable.OnPropertyChanged("LogTourData");
+        }
+
+
+        //Map
+        public void setImageFromTourId(int id) 
+        {
+            try
+            {
+                if (id == -1)
+                {
+                    displayedImage = imageLoader.getImage("NOIMAGE");
+                    observable.OnPropertyChanged("map");
+                    return;
+                }
+                try
+                {
+                    displayedImage = imageLoader.getImage(tourList[id].name);
+                    return;
+                }
+                catch (Exception e)
+                {
+                    Logging.Error("Missing image. ");
+                    displayedImage = imageLoader.getImage("NOIMAGE");
+                    observable.OnPropertyChanged("map");
+                    return;
+                }
+            }
+            catch (Exception e)
+            {
+                Logging.Error("Missing image. ");
+            }
+        }
+        public async void setMapImageFromCoords(float[] coords)
+        {
+            try
+            {
+                Mapquest mapquest = new Mapquest();
+                displayedImage = await mapquest.GetMapRouteCoord(coords[0], coords[1], coords[2], coords[3]);
+                observable.OnPropertyChanged("map");
+            }
+            catch (Exception e)
+            {
+
+            }
+        }
+        public async Task updateMap(string start, string end)
+        {
+            Mapquest mapquest = new Mapquest();
+            try
+            {
+                string[] locations = { start, end };
+                float[] coords = await mapquest.namesToCoord(locations);
+                setMapImageFromCoords(coords); //-R 
+
+            }
+            catch (Exception)
+            {
+                Logging.Error("Didn't get the coordiantes from Mapquest. ");
+            }
+        }
+        public void setImageFromLogId(int logIndex)
+        {
+            string name = logList[logIndex].tour.name;
+            try
+            {
+                if (logIndex == -1)
+                {
+                    displayedImage = imageLoader.getImage("NOIMAGE");
+                    return;
+                }
+                try
+                {
+                    displayedImage = imageLoader.getImage(name);
+                    return;
+                }
+                catch (Exception e)
+                {
+                    Logging.Error("Missing image. ");
+                    displayedImage = imageLoader.getImage("NOIMAGE");
+                    return;
+                }
+            }
+            catch (Exception e)
+            {
+                Logging.Error("Missing image. ");
+            }
+        }
+
+        //Utility
+        public string tourNameFromID(List<DataAccess.ITour> tourListDA, int inputRouteID)
+        {
+            string name = null;
+            foreach (DataAccess.ITour tour in tourListDA)
+            {
+                if (tour.id == inputRouteID)
+                {
+                    name = tour.name;
+                }
+            }
+            return name;
+        }
+        public int tourIDFromName(List<DataAccess.ITour> tourListDA, string inputRouteName)
+        {
+            int tour_id = -1;
+            foreach (DataAccess.ITour tour in tourListDA)
+            {
+                if (tour.name == inputRouteName)
+                {
+                    tour_id = tour.id;
+                    break;
+                }
+            }
+            return tour_id;
+        }
+        public int logIdFromName(List<DataAccess.ILog> logListDA, string inputLogName)
+        {
+            int log_id = -1;
+            foreach (DataAccess.ILog log in logListDA)
+            {
+                if (log.logTitle == inputLogName)
+                {
+                    log_id = log.id;
+                    break;
+                }
+            }
+            return log_id;
+        }
+        public DataAccess.ILog logFromName(List<DataAccess.ILog> logListDA, string inputLogName)
+        {
+            DataAccess.ILog targetLog = null;
+            foreach (DataAccess.ILog log in logListDB)
+            {
+                if (log.logTitle == inputLogName)
+                {
+                    targetLog = log;
+                    break;
+                }
+            }
+            return targetLog;
         }
     }
 }

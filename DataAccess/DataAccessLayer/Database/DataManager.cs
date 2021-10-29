@@ -198,9 +198,12 @@ namespace DataAccess
             database.ExecuteNonQuery(command);
         }
 
-        public void modifyTour(Tour NewTour, int id)
+        public void modifyTour(ITour NewTour)
         {
-
+            if (NewTour.id == -1)
+            {
+                return;
+            }
             #region String Builder
             StringBuilder sb = new StringBuilder();
             sb.Append("UPDATE tours SET ");
@@ -257,7 +260,7 @@ namespace DataAccess
             database.DefineParameter(command, TOUR_TABLE_COLUMNS.el_location_y.ToString(), DbType.Decimal, NewTour.el_y);
             database.DefineParameter(command, TOUR_TABLE_COLUMNS.description.ToString(), DbType.String, NewTour.routeDescription);
             database.DefineParameter(command, TOUR_TABLE_COLUMNS.information.ToString(), DbType.String, NewTour.routeInformation);
-            database.DefineParameter(command, "tour_id", DbType.Int32, id);
+            database.DefineParameter(command, "tour_id", DbType.Int32, NewTour.id);
             database.ExecuteNonQuery(command);
         }
 
@@ -314,16 +317,24 @@ namespace DataAccess
             IDataReader reader = database.ExecuteReader(command);
             while (reader.Read())
             {
+                string date;
+                if (reader.IsDBNull(3))
+                {
+                    date = null;
+                } else
+                {
+                    date = reader.GetDateTime(3).ToString();
+                }
                 logList.Add(new Log(reader.GetInt32(0),
                     reader.GetString(1),
                     reader.GetInt32(2),
                     reader.GetString(4),
                     reader.GetFloat(5),
-                    (uint)reader.GetInt32(9),
+                    reader.GetInt32(9),
                     reader.GetInt32(6),
                     reader.GetInt32(7),
                     reader.GetInt32(8),
-                    reader.GetDateTime(3).ToString()));
+                    date));
             }
             database.CloseConn();
             return logList;
@@ -377,13 +388,19 @@ namespace DataAccess
             DbCommand command = database.CreateCommand(sb.ToString());
             database.DefineParameter(command, LOGS_TABLE_COLUMNS.name.ToString(), DbType.String, NewLog.logTitle);
             database.DefineParameter(command, LOGS_TABLE_COLUMNS.route_id.ToString(), DbType.Int32, NewLog.route_id);
-            database.DefineParameter(command, LOGS_TABLE_COLUMNS.date.ToString(), DbType.DateTime, DateTime.Parse(NewLog.date));
+            if (string.IsNullOrEmpty(NewLog.date))
+            {
+                database.DefineParameter(command, LOGS_TABLE_COLUMNS.date.ToString(), DbType.DateTime, DBNull.Value);
+            } else
+            {
+                database.DefineParameter(command, LOGS_TABLE_COLUMNS.date.ToString(), DbType.DateTime, DateTime.Parse(NewLog.date));
+            }
             database.DefineParameter(command, LOGS_TABLE_COLUMNS.report.ToString(), DbType.String, NewLog.report);
             database.DefineParameter(command, LOGS_TABLE_COLUMNS.duration.ToString(), DbType.Decimal, NewLog.duration);
             database.DefineParameter(command, LOGS_TABLE_COLUMNS.averageSpeed.ToString(), DbType.Decimal, NewLog.averageSpeed);
             database.DefineParameter(command, LOGS_TABLE_COLUMNS.topSpeed.ToString(), DbType.Decimal, NewLog.topSpeed);
             database.DefineParameter(command, LOGS_TABLE_COLUMNS.calories.ToString(), DbType.Decimal, NewLog.calories);
-            database.DefineParameter(command, LOGS_TABLE_COLUMNS.rating.ToString(), DbType.Int32, (int)NewLog.rating);
+            database.DefineParameter(command, LOGS_TABLE_COLUMNS.rating.ToString(), DbType.Int32, NewLog.rating);
             database.ExecuteNonQuery(command);
             database.CloseConn();
         }
@@ -427,7 +444,7 @@ namespace DataAccess
                 reader.GetInt32(2),
                 reader.GetString(4),
                 reader.GetFloat(5),
-                (uint)reader.GetInt32(9),
+                reader.GetInt32(9),
                 reader.GetInt32(6),
                 reader.GetInt32(7),
                 reader.GetInt32(8),
@@ -446,6 +463,7 @@ namespace DataAccess
             DbCommand command = database.CreateCommand(sb.ToString());
             database.DefineParameter(command, "log_id", DbType.Int32, id);
             database.ExecuteNonQuery(command);
+            database.CloseConn();
         }
 
         public void modifyLog(Log NewLog, int id)

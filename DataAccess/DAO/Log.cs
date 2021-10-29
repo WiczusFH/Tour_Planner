@@ -6,7 +6,7 @@ namespace DataAccess
 {
     public class Log : ILog
     {
-        public Log(int id, string logTitle, int route_id, string report, float duration, uint rating, float averageSpeed, float topSpeed, float calories, string date)
+        public Log(int id, string logTitle, int route_id, string report, float duration, int rating, float averageSpeed, float topSpeed, float calories, string date)
         {
             this.id = id;
             this.logTitle = logTitle;
@@ -25,7 +25,7 @@ namespace DataAccess
         public int route_id {get; set; }
         public string report {get; set; }
         public float duration {get; set; }
-        public uint rating {get; set; }
+        public int rating {get; set; }
         public float averageSpeed {get; set; }
         public float topSpeed {get; set; }
         public float calories {get; set; }

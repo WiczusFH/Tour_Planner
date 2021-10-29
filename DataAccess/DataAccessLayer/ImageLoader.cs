@@ -5,20 +5,27 @@ using System.IO;
 using System.Windows.Media.Imaging;
 using System.Drawing;
 using System.Threading;
+using log4net;
 namespace DataAccess
 {
     public class ImageLoader 
     {
+        log4net.ILog Logging = LogManager.GetLogger(typeof(ImageLoader));
 
-        public BitmapImage getImage(string uri)
+        public BitmapImage getImage(string name)
         {
 
             string execPath = AppDomain.CurrentDomain.BaseDirectory;
             StringBuilder sb = new StringBuilder();
             sb.Append(execPath);
-            sb.Append(uri);
+            sb.Append("/Images/");
+            sb.Append(name);
+            sb.Append(".png");
+            Logging.Info("Loaded from" + sb.ToString());
+
             Uri path = new Uri(sb.ToString());
             BitmapImage bitmap = new BitmapImage(path);
+
             return bitmap;
         }
         public BitmapImage getImageHttp(string uri)
@@ -33,28 +40,27 @@ namespace DataAccess
             string execPath = AppDomain.CurrentDomain.BaseDirectory;
             StringBuilder sb = new StringBuilder();
             sb.Append(execPath);
+            sb.Append("/Images/");
             sb.Append(filename);
-            Console.WriteLine(image.IsDownloading);
-            Thread.Sleep(5000);
-            Console.WriteLine(image.PixelWidth);
+            sb.Append(".png");
+            if (File.Exists(sb.ToString()))
+            {
+                File.Delete(sb.ToString());
+            }
 
-            Console.WriteLine(image.IsDownloading);
-            //image.Freeze();
             Bitmap bitmap = BitmapImage2Bitmap(image);
             bitmap.Save(sb.ToString());
-
-            
+            Logging.Info("Saved at" + sb.ToString());
         }
         Bitmap BitmapImage2Bitmap(BitmapImage bitmapImage)
         {
-            //BitmapImage bitmapImage = new BitmapImage(new Uri("../Images/test.png", UriKind.Relative));
-
             using (MemoryStream outStream = new MemoryStream())
             {
                 BitmapEncoder enc = new BmpBitmapEncoder();
                 enc.Frames.Add(BitmapFrame.Create(bitmapImage));
                 enc.Save(outStream);
-                System.Drawing.Bitmap bitmap = new System.Drawing.Bitmap(outStream);
+      
+                Bitmap bitmap = new System.Drawing.Bitmap(outStream);
 
                 return new Bitmap(bitmap);
             }

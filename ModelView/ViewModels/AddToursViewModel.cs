@@ -69,17 +69,17 @@ namespace ViewModel
             if (!String.IsNullOrEmpty(inputStartLocation) && !String.IsNullOrEmpty(inputEndLocation))
             {
                 string[] locations = { inputStartLocation, inputEndLocation };
-                repository.updateCoords(inputStartLocation, inputEndLocation );
+                repository.updateMap(inputStartLocation, inputEndLocation );
             }
             if (!String.IsNullOrEmpty(inputStartLocation) && String.IsNullOrEmpty(inputEndLocation))
             {
                 string[] locations = { inputStartLocation, inputStartLocation };
-                repository.updateCoords(inputStartLocation, inputStartLocation);
+                repository.updateMap(inputStartLocation, inputStartLocation);
             }
             if (String.IsNullOrEmpty(inputStartLocation) && !String.IsNullOrEmpty(inputEndLocation))
             {
                 string[] locations = { inputEndLocation, inputEndLocation };
-                repository.updateCoords(inputEndLocation, inputEndLocation);
+                repository.updateMap(inputEndLocation, inputEndLocation);
             }
         }
         public void addTour()

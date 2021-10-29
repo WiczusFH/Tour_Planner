@@ -49,3 +49,9 @@ C:\Users\Oskar\source\repos\Tour_Planner\Tour_Planner\obj\Debug\netcoreapp3.1\Vi
 C:\Users\Oskar\source\repos\Tour_Planner\Tour_Planner\bin\Debug\netcoreapp3.1\View.dll.config
 C:\Users\Oskar\source\repos\Tour_Planner\Tour_Planner\bin\Debug\netcoreapp3.1\Npgsql.dll
 C:\Users\Oskar\source\repos\Tour_Planner\Tour_Planner\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+C:\Users\Oskar\source\repos\Tour_Planner\Tour_Planner\obj\Debug\netcoreapp3.1\UserControls\ModifyLog.g.cs
+C:\Users\Oskar\source\repos\Tour_Planner\Tour_Planner\obj\Debug\netcoreapp3.1\UserControls\ModifyTour.g.cs
+C:\Users\Oskar\source\repos\Tour_Planner\Tour_Planner\obj\Debug\netcoreapp3.1\UserControls\ModifyLog.baml
+C:\Users\Oskar\source\repos\Tour_Planner\Tour_Planner\obj\Debug\netcoreapp3.1\UserControls\ModifyTour.baml
+C:\Users\Oskar\source\repos\Tour_Planner\Tour_Planner\obj\Debug\netcoreapp3.1\UserControls\LogReport.g.cs
+C:\Users\Oskar\source\repos\Tour_Planner\Tour_Planner\obj\Debug\netcoreapp3.1\UserControls\LogReport.baml

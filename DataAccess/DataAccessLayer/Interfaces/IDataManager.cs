@@ -11,7 +11,7 @@ namespace DataAccess
         public ITour GetTour(int id);
 
         public void deleteTour(int id);
-        public void modifyTour(Tour NewTour, int id);
+        public void modifyTour(ITour NewTour);
         public int getTourId(string name);
 
         public List<ILog> GetLogs();
