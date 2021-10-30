@@ -33,7 +33,11 @@
         "frameworks": {
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
-            "projectReferences": {}
+            "projectReferences": {
+              "C:\\Users\\Oskar\\source\\repos\\Tour_Planner\\DataAccess\\DataAccess.csproj": {
+                "projectPath": "C:\\Users\\Oskar\\source\\repos\\Tour_Planner\\DataAccess\\DataAccess.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -127,6 +131,10 @@
             "Npgsql": {
               "target": "Package",
               "version": "[5.0.10, )"
+            },
+            "PdfSharp": {
+              "target": "Package",
+              "version": "[1.50.5147, )"
             },
             "System.Drawing.Common": {
               "target": "Package",

@@ -29,8 +29,8 @@
                         <TabItem Header="Modify Route">
                             <usrcntr:ModifyTour/>
                         </TabItem>
-                        <TabItem Header="Report">
-                            <usrcntr:Report/>
+                        <TabItem Header="Export">
+                            <usrcntr:Export/>
                         </TabItem>
                     </TabControl>
                     <Border Grid.Column="1">
@@ -56,7 +56,7 @@
                                 <usrcntr:ModifyLog/>
                             </TabItem>
                             <TabItem Header="Report">
-                                <usrcntr:LogReport/>
+                                <usrcntr:Report/>
                             </TabItem>
                         </TabControl>
                     </Border>

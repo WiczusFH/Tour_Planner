@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using log4net;
 using Model.Common;
+using Business;
 using DataAccess;
 using System.Windows.Media.Imaging;
 using System.Threading.Tasks;
@@ -15,7 +16,6 @@ namespace Model
         public Observable observable = new Observable();
         private static Repository _address = new Repository();
         public static Repository address { get { return _address; } }
-        private log4net.ILog log;
         #endregion
         #region Dependencies
         public DataManager dataManager = new DataManager();
@@ -41,6 +41,63 @@ namespace Model
         private Repository() {
             Configuration configuration = Configuration.address;
             loadTourLogData();
+
+
+        }
+
+        public void exportTour(string inputRoute, string exportPath)
+        {
+            foreach (DataAccess.ITour tour in tourListDB)
+            {
+                if (tour.name == inputRoute)
+                {
+                    dataManager.exportTour(tour, exportPath);
+                    break;
+                }
+            }
+        }
+
+        public async void importTour(string importPath)
+        {
+            Mapquest mapquest = new Mapquest();
+            DataAccess.ITour tourDB;
+            try
+            {
+                tourDB = dataManager.importTour(importPath);
+            }
+            catch {
+                Logging.Error("Couldn't import tour. ");
+                return; 
+            }
+            dataManager.insertTour(tourDB);
+            tourListDB.Add(tourDB);
+            tourList.Add(dataAccessModelConverter.tourModel(tourDB));
+            //getImage
+
+            try
+            {
+                imageLoader.saveImage(await mapquest.GetMapRouteCoord(tourDB.sl_x, tourDB.sl_y, tourDB.el_x, tourDB.sl_y), tourDB.name);
+            }
+            catch (Exception e)
+            {
+                Logging.Error("Couldn't save image during Tour Import. ");
+            }
+            observable.OnPropertyChanged("tourList");
+        }
+
+        //Reports
+        public void generateLogReport()
+        {
+            ReportGenerator reportGenerator = new ReportGenerator();
+            float totalTime = Statistics.getTotalTime(logListDB);
+            float totalDistance = Statistics.getTotalDistance(logListDB, tourListDB);
+            reportGenerator.generateLogReport(totalTime, totalDistance);
+        }
+
+        public void generateTourReport()
+        {
+            ReportGenerator reportGenerator = new ReportGenerator();
+            reportGenerator.generateTourReport(logListDB, tourListDB[0]);
         }
 
         //Initialise From Database
@@ -64,9 +121,36 @@ namespace Model
             observable.OnPropertyChanged("LogTourData");
         }
 
-        public void modifyLog() //-R
+        public void modifyLog(string inputRouteName, string newDuration, string newTopSpeed, string newRating, string newReport, string newDate) //-R
         {
-            throw new NotImplementedException();
+            Model.ILog targetLog = null;
+            foreach(Model.ILog log in logList)
+            {
+                if (log.logTitle == inputRouteName)
+                {
+                    targetLog = log;
+                    break;
+                }
+            }
+            DataAccess.ILog targetLogDB = null;
+            foreach (DataAccess.ILog log in logListDB)
+            {
+                if (log.logTitle == inputRouteName)
+                {
+                    targetLogDB = log;
+                    break;
+                }
+            }
+            Model.ILog newLog=Log.fromStringInput(targetLog.logTitle, targetLog.routeName, newDuration, newDate, newReport, newRating, newTopSpeed, tourList);
+            int routeID = targetLogDB.route_id;
+            logList.Remove(targetLog);
+            logListDB.Remove(targetLogDB);
+            logList.Add(newLog);
+            DataAccess.ILog newLogDB = dataAccessModelConverter.logDA(newLog);
+            newLogDB.route_id = routeID;
+            logListDB.Add(newLogDB);
+            dataManager.modifyLog(newLogDB);
+            observable.OnPropertyChanged("LogTourData");
         }
 
         public void removeLog(int logIndex)
@@ -86,7 +170,6 @@ namespace Model
             string[] locations = { inputStartLocation, inputEndLocation };
             float[] coords = await mapquest.namesToCoord(locations);
             float distance = (float)Math.Pow(Math.Pow(coords[0] - coords[1], 2) + Math.Pow(coords[1] - coords[2], 2), 0.5);
-            //await updateCoords(inputStartLocation, inputEndLocation);
             //Add to active list
             Tour tour = new Tour(inputName, inputDescription, inputInformation, distance, inputStartLocation, inputEndLocation);
             tourList.Add(tour);

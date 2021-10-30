@@ -17,12 +17,10 @@
                   SelectedValuePath="name"
                   SelectedValue="{Binding inputRouteName}">
         </ComboBox>
-        <TextBlock TextAlignment="Center">New Tour</TextBlock>
         <Label>Description:</Label>
         <TextBox x:Name="NewTourDescription" Text="{Binding newDescription, Mode=TwoWay}"/>
         <Label>Information:</Label>
         <TextBox x:Name="NewTourInformation" Text="{Binding newInformation, Mode=TwoWay}"/>
-        <Button Command="{Binding searchCommand}">Show</Button>
         <Button Command="{Binding modifyCommand}">Confirm</Button>
     </StackPanel>
 </UserControl>

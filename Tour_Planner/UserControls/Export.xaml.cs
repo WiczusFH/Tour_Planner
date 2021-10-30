@@ -14,11 +14,11 @@ using System.Windows.Shapes;
 namespace Tour_Planner.View.UserControls
 {
     /// <summary>
-    /// Interaction logic for LogReport.xaml
+    /// Interaction logic for Export.xaml
     /// </summary>
-    public partial class LogReport : UserControl
+    public partial class Export : UserControl
     {
-        public LogReport()
+        public Export()
         {
             InitializeComponent();
         }

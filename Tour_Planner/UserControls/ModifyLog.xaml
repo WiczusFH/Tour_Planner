@@ -8,7 +8,25 @@
              
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
-    </Grid>
+    <!--<UserControl.DataContext>
+        <viewModel:MainViewModel/>
+    </UserControl.DataContext>-->
+    <StackPanel Background="White" DataContext="{Binding modifyLogViewModel}">
+        <Label>Log Name:</Label>
+        <ComboBox Width="Auto" ItemsSource="{Binding logList}" DisplayMemberPath="logTitle"
+                  SelectedValuePath="logTitle"
+                  SelectedValue="{Binding inputRouteName}">
+        </ComboBox>
+        <Label>Duration:</Label>
+        <TextBox x:Name="Duration" Text="{Binding newDuration, Mode=TwoWay}"/>
+        <Label>Top Speed:</Label>
+        <TextBox x:Name="TopSpeed" Text="{Binding newTopSpeed, Mode=TwoWay}"/>
+        <Label>Rating:</Label>
+        <TextBox x:Name="Rating" Text="{Binding newRating, Mode=TwoWay}"/>
+        <Label>Report:</Label>
+        <TextBox x:Name="Report" Text="{Binding newReport, Mode=TwoWay}"/>
+        <Label>Date:</Label>
+        <TextBox x:Name="Date" Text="{Binding newDate, Mode=TwoWay}"/>
+        <Button Command="{Binding modifyCommand}">Confirm</Button>
+    </StackPanel>
 </UserControl>

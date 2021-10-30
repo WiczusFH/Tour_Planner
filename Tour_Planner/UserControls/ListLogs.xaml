@@ -95,7 +95,6 @@
                 </DataTemplate> 
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-        <Button Command="{Binding updateLogListCommand}">Refresh</Button>
     </StackPanel>
     
 </UserControl>

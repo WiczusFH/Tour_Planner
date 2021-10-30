@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NETCOREAPP;NETCOREAPP3_1;
 C:\Users\Oskar\source\repos\Tour_Planner\Tour_Planner\App.xaml
-10-1528376293
+10672034071
 
-14898993557
-206-791903056
-MainWindow.xaml;UserControls\AddLog.xaml;UserControls\AddTour.xaml;UserControls\ListLogs.xaml;UserControls\ListTours.xaml;UserControls\LogReport.xaml;UserControls\map.xaml;UserControls\ModifyLog.xaml;UserControls\ModifyTour.xaml;UserControls\Report.xaml;
+141189232496
+208-403539687
+MainWindow.xaml;UserControls\AddLog.xaml;UserControls\AddTour.xaml;UserControls\Export.xaml;UserControls\ListLogs.xaml;UserControls\ListTours.xaml;UserControls\map.xaml;UserControls\ModifyLog.xaml;UserControls\ModifyTour.xaml;UserControls\Report.xaml;
 
-True
+False
 

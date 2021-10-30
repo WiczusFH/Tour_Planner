@@ -25,5 +25,8 @@
         <TextBox x:Name="NewTourEnd" Text="{Binding inputEndLocation}"/>
         <Button Command="{Binding SearchAddressCommand}">Search</Button>
         <Button Command="{Binding AddTourCommand}">Confirm</Button>
+        <Label>Input Location:</Label>
+        <TextBox x:Name="importLocation" Text="{Binding inputPath}"/>
+        <Button Command="{Binding importTourCommand}">Import File</Button>
     </StackPanel>
 </UserControl>

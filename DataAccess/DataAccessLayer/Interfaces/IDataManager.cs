@@ -7,7 +7,7 @@ namespace DataAccess
     interface IDataManager
     {
         public List<ITour> GetTours();
-        public void insertTour(Tour NewTour);
+        public void insertTour(ITour NewTour);
         public ITour GetTour(int id);
 
         public void deleteTour(int id);
@@ -19,7 +19,7 @@ namespace DataAccess
         public ILog getLog(int id);
 
         public void deleteLog(int id);
-        public void modifyLog(Log NewLog, int id);
+        public void modifyLog(ILog NewLog);
         public int getLogId(string name);
 
     }

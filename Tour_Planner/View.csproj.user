@@ -7,7 +7,7 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="UserControls\LogReport.xaml.cs">
+    <Compile Update="UserControls\Export.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="UserControls\ModifyLog.xaml.cs">
@@ -27,13 +27,13 @@
     <Page Update="UserControls\AddTour.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="UserControls\Export.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="UserControls\ListLogs.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="UserControls\ListTours.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="UserControls\LogReport.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="UserControls\map.xaml">

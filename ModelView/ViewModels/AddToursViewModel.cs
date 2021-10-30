@@ -28,8 +28,11 @@ namespace ViewModel
         public string inputStartLocation { get { return _inputStartLocation; } set { _inputStartLocation = value; SearchAddressCommand.RaiseCanExecuteChanged(); AddTourCommand.RaiseCanExecuteChanged(); } }
         string _inputEndLocation;
         public string inputEndLocation { get { return _inputEndLocation; } set { _inputEndLocation = value; SearchAddressCommand.RaiseCanExecuteChanged(); AddTourCommand.RaiseCanExecuteChanged(); } }
+        string _inputPath;
+        public string inputPath { get { return _inputPath; } set { _inputPath = value; importTourCommand.RaiseCanExecuteChanged();  } }
         public RelayCommand AddTourCommand { get; }
         public RelayCommand SearchAddressCommand { get; }
+        public RelayCommand importTourCommand { get; }
         Repository repository = Repository.address;
         #endregion
 
@@ -40,6 +43,7 @@ namespace ViewModel
             log.Info("Tours View Model instantiated. ");
             AddTourCommand = new RelayCommand(addTour, addTourPredicate);
             SearchAddressCommand = new RelayCommand(searchTour, searchTourPredicate);
+            importTourCommand = new RelayCommand(importTour, importTourPredicate);
 
         }
         #endregion
@@ -59,6 +63,13 @@ namespace ViewModel
             if (string.IsNullOrEmpty(inputName)) { return false; }
             if (string.IsNullOrEmpty(inputStartLocation)) { return false; }
             if (string.IsNullOrEmpty(inputEndLocation)) { return false; }
+            return true;
+        }
+        bool importTourPredicate(object obj)
+        {
+            log.Info("Using AddTourPredicate. ");
+
+            if (string.IsNullOrEmpty(inputPath)) { return false; }
             return true;
         }
         #endregion
@@ -85,6 +96,15 @@ namespace ViewModel
         public void addTour()
         {
             repository.addTour(inputName,inputDescription,inputInformation,inputStartLocation,inputEndLocation);
+        }
+        
+        public void importTour()
+        {
+            try
+            {
+                repository.importTour(inputPath);
+            }
+            catch { }
         }
         #endregion
     }

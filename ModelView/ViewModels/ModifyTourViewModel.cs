@@ -34,7 +34,6 @@ namespace ViewModel
                     {
                         newDescription = tour.routeDescription; OnPropertyChanged("newDescription");
                         newInformation = tour.routeInformation; OnPropertyChanged("newInformation");
-                        searchCommand.RaiseCanExecuteChanged();
                         modifyCommand.RaiseCanExecuteChanged();
                         break;
                     }
@@ -43,23 +42,16 @@ namespace ViewModel
         #endregion
 
         #region Commands
-        public RelayCommand searchCommand { get; private set; }
         public RelayCommand modifyCommand { get; private set; }
         #endregion
         private ModifyTourViewModel() {
             log = LogManager.GetLogger(GetType());
-            searchCommand = new RelayCommand(showTour, showTourPredicate);//-R ChangeToShow
             modifyCommand = new RelayCommand(modifyTour, modifyCommandPredicate);
             tourList = repository.tourList;
             repository.observable.PropertyChanged += (s, e) => { tourList = new List<Model.ITour>(repository.tourList); OnPropertyChanged("tourList"); };
             OnPropertyChanged("tourList");
 
-            searchCommand.RaiseCanExecuteChanged();
             modifyCommand.RaiseCanExecuteChanged();
-        }
-        bool showTourPredicate(object obj)
-        {
-            return true;
         }
         bool modifyCommandPredicate(object obj)
         {
@@ -68,10 +60,6 @@ namespace ViewModel
             return true;
         }
 
-        public void showTour()
-        {
-
-        }
         public void modifyTour()
         {
             repository.modifyTour(inputRouteName, newDescription, newInformation);

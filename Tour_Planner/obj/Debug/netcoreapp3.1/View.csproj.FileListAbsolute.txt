@@ -53,5 +53,9 @@ C:\Users\Oskar\source\repos\Tour_Planner\Tour_Planner\obj\Debug\netcoreapp3.1\Us
 C:\Users\Oskar\source\repos\Tour_Planner\Tour_Planner\obj\Debug\netcoreapp3.1\UserControls\ModifyTour.g.cs
 C:\Users\Oskar\source\repos\Tour_Planner\Tour_Planner\obj\Debug\netcoreapp3.1\UserControls\ModifyLog.baml
 C:\Users\Oskar\source\repos\Tour_Planner\Tour_Planner\obj\Debug\netcoreapp3.1\UserControls\ModifyTour.baml
-C:\Users\Oskar\source\repos\Tour_Planner\Tour_Planner\obj\Debug\netcoreapp3.1\UserControls\LogReport.g.cs
-C:\Users\Oskar\source\repos\Tour_Planner\Tour_Planner\obj\Debug\netcoreapp3.1\UserControls\LogReport.baml
+C:\Users\Oskar\source\repos\Tour_Planner\Tour_Planner\bin\Debug\netcoreapp3.1\PdfSharp.Charting.dll
+C:\Users\Oskar\source\repos\Tour_Planner\Tour_Planner\bin\Debug\netcoreapp3.1\PdfSharp.dll
+C:\Users\Oskar\source\repos\Tour_Planner\Tour_Planner\bin\Debug\netcoreapp3.1\de\PdfSharp.Charting.resources.dll
+C:\Users\Oskar\source\repos\Tour_Planner\Tour_Planner\bin\Debug\netcoreapp3.1\de\PdfSharp.resources.dll
+C:\Users\Oskar\source\repos\Tour_Planner\Tour_Planner\obj\Debug\netcoreapp3.1\UserControls\Export.g.cs
+C:\Users\Oskar\source\repos\Tour_Planner\Tour_Planner\obj\Debug\netcoreapp3.1\UserControls\Export.baml

@@ -56,6 +56,10 @@ namespace Model
                 logModel.averageSpeed, logModel.topSpeed, logModel.calories, logModel.date.ToString());
             return logDB;
         }
+        public Model.Tour tourModel(DataAccess.ITour tourDA)
+        {
+            return new Model.Tour(tourDA.name,tourDA.routeDescription,tourDA.routeInformation,tourDA.distance,tourDA.sl_name,tourDA.el_name);
+        }
 
     }
 }

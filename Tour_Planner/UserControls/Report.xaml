@@ -17,6 +17,7 @@
                   SelectedValuePath="name"
                   SelectedValue="{Binding inputRouteName}">
         </ComboBox>
-        <Button Command="{Binding generateReportCommand}">Generate PDF</Button>
+        <Button Command="{Binding generateTourReportCommand}">Generate Tour Report. </Button>
+        <Button Command="{Binding generateLogReportCommand}">Generate Summarize Report. </Button>
     </StackPanel>
 </UserControl>

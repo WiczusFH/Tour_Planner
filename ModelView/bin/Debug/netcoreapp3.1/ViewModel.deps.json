@@ -69,6 +69,26 @@
           }
         }
       },
+      "PDFsharp/1.50.5147": {
+        "runtime": {
+          "lib/net20/PdfSharp.Charting.dll": {
+            "assemblyVersion": "1.50.5147.0",
+            "fileVersion": "1.50.5147.0"
+          },
+          "lib/net20/PdfSharp.dll": {
+            "assemblyVersion": "1.50.5147.0",
+            "fileVersion": "1.50.5147.0"
+          }
+        },
+        "resources": {
+          "lib/net20/de/PdfSharp.Charting.resources.dll": {
+            "locale": "de"
+          },
+          "lib/net20/de/PdfSharp.resources.dll": {
+            "locale": "de"
+          }
+        }
+      },
       "System.Configuration.ConfigurationManager/4.5.0": {
         "dependencies": {
           "System.Security.Cryptography.ProtectedData": "4.5.0",
@@ -120,6 +140,7 @@
       },
       "Business/1.0.0": {
         "dependencies": {
+          "DataAccess": "1.0.0",
           "Newtonsoft.Json": "13.0.1",
           "System.Drawing.Common": "5.0.2",
           "log4net": "2.0.12"
@@ -132,6 +153,7 @@
         "dependencies": {
           "Newtonsoft.Json": "13.0.1",
           "Npgsql": "5.0.10",
+          "PDFsharp": "1.50.5147",
           "System.Drawing.Common": "5.0.2",
           "log4net": "2.0.12"
         },
@@ -193,6 +215,13 @@
       "sha512": "sha512-3TB9le3lfu5Hc+LSHqMCVLcA+qUPg1enyM4+u0pMUBmNNGwc0sVPrnfnys2TVZIdkF8Aww/AZlnJHDsnEGqD0g==",
       "path": "npgsql/5.0.10",
       "hashPath": "npgsql.5.0.10.nupkg.sha512"
+    },
+    "PDFsharp/1.50.5147": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-vr5KBIqcXu2hqZ43UTwPR+jqHgMrT5tsPtJvEF+mORKoBNMh3bRWgAwic0U1sT2IVb4PR5m0GyQxnmCz8jBHWg==",
+      "path": "pdfsharp/1.50.5147",
+      "hashPath": "pdfsharp.1.50.5147.nupkg.sha512"
     },
     "System.Configuration.ConfigurationManager/4.5.0": {
       "type": "package",

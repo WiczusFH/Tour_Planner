@@ -18,15 +18,17 @@ namespace ViewModel
         #endregion
 
         string _inputRouteName;
-        public string inputRouteName { get { return _inputRouteName; } set { _inputRouteName = value; generateReportCommand.RaiseCanExecuteChanged(); } }
+        public string inputRouteName { get { return _inputRouteName; } set { _inputRouteName = value; generateTourReportCommand.RaiseCanExecuteChanged(); } }
         Repository repository = Repository.address;
         ObservableCollection<ITour> _tourList;
         public ObservableCollection<ITour> tourList { get { return _tourList; } set { _tourList = value; observable.OnPropertyChanged("tourList"); } }
-        public RelayCommand generateReportCommand { get; }
+        public RelayCommand generateTourReportCommand { get; }
+        public RelayCommand generateLogReportCommand { get; }
 
         ReportViewModel() { 
             tourList = new ObservableCollection<ITour>(repository.tourList);
-            generateReportCommand = new RelayCommand(generateReport, generateReportPredicate);
+            generateTourReportCommand = new RelayCommand(generateTourReport, generateReportPredicate);
+            generateLogReportCommand = new RelayCommand(generateLogReport, (obj)=> { return true; });
 
         }
         bool generateReportPredicate(object obj)
@@ -36,11 +38,14 @@ namespace ViewModel
             return true;
         }
 
-        public void generateReport()
+        public void generateTourReport()
         {
-            throw new NotImplementedException();
+            repository.generateTourReport();
         }
-
+        public void generateLogReport()
+        {
+            repository.generateLogReport();
+        }
 
     }
 }

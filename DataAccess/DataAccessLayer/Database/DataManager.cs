@@ -7,12 +7,16 @@ using System.Windows.Media.Imaging;
 using Npgsql;
 using System.Data.Common;
 using System.Data;
+using System.Globalization;
+using Newtonsoft.Json;
+using System.IO;
+
 
 namespace DataAccess
 {
     public class DataManager : IDataManager
     {
-        public void insertTour(Tour NewTour)
+        public void insertTour(ITour NewTour)
         {
             #region String Building
             StringBuilder sb = new StringBuilder();
@@ -393,7 +397,7 @@ namespace DataAccess
                 database.DefineParameter(command, LOGS_TABLE_COLUMNS.date.ToString(), DbType.DateTime, DBNull.Value);
             } else
             {
-                database.DefineParameter(command, LOGS_TABLE_COLUMNS.date.ToString(), DbType.DateTime, DateTime.Parse(NewLog.date));
+                database.DefineParameter(command, LOGS_TABLE_COLUMNS.date.ToString(), DbType.DateTime, DateTime.Parse(NewLog.date, new CultureInfo("en-GB")));
             }
             database.DefineParameter(command, LOGS_TABLE_COLUMNS.report.ToString(), DbType.String, NewLog.report);
             database.DefineParameter(command, LOGS_TABLE_COLUMNS.duration.ToString(), DbType.Decimal, NewLog.duration);
@@ -466,7 +470,7 @@ namespace DataAccess
             database.CloseConn();
         }
 
-        public void modifyLog(Log NewLog, int id)
+        public void modifyLog(ILog NewLog)
         {
             #region String BUilder
             StringBuilder sb = new StringBuilder();
@@ -513,14 +517,14 @@ namespace DataAccess
             DbCommand command = database.CreateCommand(sb.ToString());
             database.DefineParameter(command, LOGS_TABLE_COLUMNS.name.ToString(), DbType.String, NewLog.logTitle);
             database.DefineParameter(command, LOGS_TABLE_COLUMNS.route_id.ToString(), DbType.Int32, NewLog.route_id);
-            database.DefineParameter(command, LOGS_TABLE_COLUMNS.date.ToString(), DbType.Date, DateTime.Parse(NewLog.date));
+            database.DefineParameter(command, LOGS_TABLE_COLUMNS.date.ToString(), DbType.Date, DateTime.Parse(NewLog.date, new CultureInfo("en-GB")));
             database.DefineParameter(command, LOGS_TABLE_COLUMNS.report.ToString(), DbType.String, NewLog.report);
             database.DefineParameter(command, LOGS_TABLE_COLUMNS.duration.ToString(), DbType.Decimal, NewLog.duration);
             database.DefineParameter(command, LOGS_TABLE_COLUMNS.averageSpeed.ToString(), DbType.Decimal, NewLog.averageSpeed);
             database.DefineParameter(command, LOGS_TABLE_COLUMNS.topSpeed.ToString(), DbType.Decimal, NewLog.topSpeed);
             database.DefineParameter(command, LOGS_TABLE_COLUMNS.calories.ToString(), DbType.Decimal, NewLog.calories);
             database.DefineParameter(command, LOGS_TABLE_COLUMNS.rating.ToString(), DbType.Int32, (int)NewLog.rating);
-            database.DefineParameter(command, "log_id", DbType.Int32, id);
+            database.DefineParameter(command, "log_id", DbType.Int32, NewLog.id);
             database.ExecuteNonQuery(command);
         }
 
@@ -542,5 +546,54 @@ namespace DataAccess
             database.CloseConn();
             return id;
         }
+
+        public void exportTour(DataAccess.ITour tour, string path)
+        {
+            string[] pathlist = path.Split("/");
+            string pathDir = path.Remove(path.Length - pathlist[pathlist.Length - 1].Length);
+            if (!Directory.Exists(pathDir))
+            {
+                pathlist = path.Split("\\");
+                pathDir = path.Remove(path.Length - pathlist[pathlist.Length - 1].Length);
+                if (!Directory.Exists(pathDir))
+                {
+                    throw new WrongFilePathException();
+                }
+            }
+
+
+            string serialized = JsonConvert.SerializeObject(tour);
+            File.WriteAllText(path, serialized);
+        }
+        public DataAccess.ITour importTour(string path) {
+
+            string[] pathlist = path.Split("/");
+            string pathDir = path.Remove(path.Length - pathlist[pathlist.Length - 1].Length);
+            Console.WriteLine(pathDir);
+            if (!Directory.Exists(pathDir))
+            {
+                pathlist = path.Split("\\");
+                pathDir = path.Remove(path.Length - pathlist[pathlist.Length - 1].Length);
+                Console.WriteLine(pathDir);
+
+                if (!Directory.Exists(pathDir))
+                {
+                    throw new WrongFilePathException();
+                }
+            }
+            Console.WriteLine(pathDir);
+
+            string serialized = File.ReadAllText(path);
+            Console.WriteLine(serialized);
+            Tour tour = JsonConvert.DeserializeObject<Tour>(serialized);
+            return tour;
+        }
+    }
+    public class WrongFilePathException : Exception
+    {
+        public WrongFilePathException() { }
+        public WrongFilePathException(string message)
+            : base(message)
+        { }
     }
 }
