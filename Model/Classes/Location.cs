@@ -7,10 +7,11 @@ using System.Windows.Media.Imaging;
 
 namespace Model
 {
-    public class Location : ILocation
-    {
-        public string name { get; set; }
-        public float X { get; set; }
-        public float Y { get; set; }
-    }
+    //-R
+    //public class Location : ILocation 
+    //{
+    //    public string name { get; set; }
+    //    public float X { get; set; }
+    //    public float Y { get; set; }
+    //}
 }

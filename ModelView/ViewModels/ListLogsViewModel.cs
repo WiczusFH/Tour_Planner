@@ -22,7 +22,12 @@ namespace ViewModel
 
         Repository repository = Repository.address;
         public List<Model.ILog> logList { get; private set; } = new List<Model.ILog>();
-
+        string _filter;
+        public string filter
+        {
+            get { return _filter; }
+            set { _filter = value; repository.filterLogs(_filter); }
+        }
         private ListLogsViewModel() {
             logList = repository.logList;
             repository.observable.PropertyChanged += (s, e) => { logList = new List<Model.ILog>(repository.logList); this.OnPropertyChanged("logList"); };

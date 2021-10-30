@@ -11,8 +11,13 @@
     <!--<UserControl.DataContext>
         <viewModel:MainViewModel/>
     </UserControl.DataContext>-->
-    <StackPanel Background="White" DataContext="{Binding listLogsViewModel}">
-        <ItemsControl ItemsSource="{Binding logList}" AlternationCount="100">
+    <ScrollViewer FlowDirection="RightToLeft">
+        <StackPanel FlowDirection="LeftToRight" Margin="10,10,10,10" Background="White" DataContext="{Binding listLogsViewModel}">
+            <Label>Filter:</Label>
+            <TextBox x:Name="filter" Text="{Binding filter}" Width="Auto"/>
+            <Separator/>
+
+            <ItemsControl ItemsSource="{Binding logList}" AlternationCount="100">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Border BorderBrush="DimGray" BorderThickness="3">
@@ -96,6 +101,6 @@
             </ItemsControl.ItemTemplate>
         </ItemsControl>
     </StackPanel>
-    
+    </ScrollViewer>
 </UserControl>
 

@@ -15,7 +15,7 @@ using System.Windows.Media.Imaging;
 
 namespace DataAccess
 {
-    public class Mapquest
+    public class Mapquest : IMapquest
     {
 
         public async Task<float[]> namesToCoord(string[] names) {
@@ -63,13 +63,13 @@ namespace DataAccess
         {
             string URL = $"https://www.mapquestapi.com/staticmap/v5/map?key={Configuration.MapQuestKey}&start={x0},{y0}&end={x1},{y1}";
 
-            byte[] img = await GetRequest_b(URL);
+            byte[] img = await this.GetRequest_b(URL);
             return LoadImage(img);
         }
 
 
         //-R Make Request api
-        async static Task<string> GetRequest_s(string RequestURL)
+        public async Task<string> GetRequest_s(string RequestURL)
         {
             string s_content;
             using (HttpClient client = new HttpClient())
@@ -85,7 +85,7 @@ namespace DataAccess
             return s_content;
         }
 
-        async static Task<byte[]> GetRequest_b(string RequestURL)
+        public async Task<byte[]> GetRequest_b(string RequestURL)
         {
             byte[] s_content;
             using (HttpClient client = new HttpClient())
@@ -98,7 +98,7 @@ namespace DataAccess
             }
             return s_content;
         }
-        private static BitmapImage LoadImage(byte[] imageData)
+        public BitmapImage LoadImage(byte[] imageData)
         {
             if (imageData == null || imageData.Length == 0) return null;
             var image = new BitmapImage();
@@ -115,5 +115,6 @@ namespace DataAccess
             image.Freeze();
             return image;
         }
+
     }
 }

@@ -10,57 +10,68 @@
     <!--<UserControl.DataContext>
         <viewModel:MainViewModel/>
     </UserControl.DataContext>-->
-    <StackPanel Background="White" DataContext="{Binding listTourViewModel}">
-        <ItemsControl ItemsSource="{Binding routeList}" AlternationCount="100">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Border BorderBrush="DimGray" BorderThickness="3">
-                        <StackPanel>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="0.375*"/>
-                                    <ColumnDefinition Width="0.375*"/>
-                                    <ColumnDefinition Width="0.375*"/>
-                                </Grid.ColumnDefinitions>
-                                <Border Grid.Column="0" BorderBrush="DarkGray" BorderThickness="2">
-                                    <TextBlock Text="{Binding name}"/>
-                                </Border>
-                                <Border Grid.Column="1" BorderBrush="DarkGray" BorderThickness="2">
-                                    <TextBlock Text="{Binding distance, StringFormat='{}{0}km'}"/>
-                                </Border>
-                                <Border Grid.Column="2" BorderBrush="DarkGray" BorderThickness="2">
-                                    <Button
+    <ScrollViewer FlowDirection="RightToLeft">
+        <StackPanel FlowDirection="LeftToRight" Margin="10, 10,10, 10" Background="White" DataContext="{Binding listTourViewModel}">
+            <Label>Filter:</Label>
+            <TextBox x:Name="filter" Text="{Binding filter}" Width="Auto"/>
+            <Separator/>
+            <ItemsControl ItemsSource="{Binding routeList}" AlternationCount="100">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="DimGray" BorderThickness="3">
+                            <StackPanel>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="0.375*"/>
+                                        <ColumnDefinition Width="0.375*"/>
+                                        <ColumnDefinition Width="0.375*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border Grid.Column="0" BorderBrush="DarkGray" BorderThickness="2">
+                                        <TextBlock Text="{Binding name}"/>
+                                    </Border>
+                                    <Border Grid.Column="1" BorderBrush="DarkGray" BorderThickness="2">
+                                        <TextBlock Text="{Binding distance, StringFormat='{}{0}km'}"/>
+                                    </Border>
+                                    <Border Grid.Column="2" BorderBrush="DarkGray" BorderThickness="2">
+                                        <Button
                                     DataContext="{Binding RelativeSource={RelativeSource AncestorType=StackPanel, AncestorLevel=2},
                                      Path=DataContext}" Command="{Binding showMapCommand}" 
                                         CommandParameter="{Binding Path=(ItemsControl.AlternationIndex), 
                                        RelativeSource={RelativeSource TemplatedParent}, 
                                         StringFormat={}Index is {0}}">
-                                        Show
-                                    </Button>
-                                </Border>
-                                <Border Grid.Column="3" BorderBrush="DarkGray" BorderThickness="2">
-                                    <Button
+                                            Show
+                                        </Button>
+                                    </Border>
+                                    <Border Grid.Column="3" BorderBrush="DarkGray" BorderThickness="2">
+                                        <Button
                                         DataContext="{Binding RelativeSource={RelativeSource AncestorType=StackPanel, AncestorLevel=2},
                                      Path=DataContext}" Command="{Binding deleteRouteCommand}" 
                                         CommandParameter="{Binding Path=(ItemsControl.AlternationIndex), 
                                        RelativeSource={RelativeSource TemplatedParent}, 
                                         StringFormat={}Index is {0}}">
-                                        Del
-                                    </Button>
+                                            Del
+                                        </Button>
+                                    </Border>
+                                </Grid>
+                                <Border BorderBrush="DarkGray" BorderThickness="2">
+                                    <TextBlock Text="{Binding routeDescription}"/>
                                 </Border>
+                                <Border BorderBrush="DarkGray" BorderThickness="2">
+                                    <TextBlock Text="{Binding routeInformation}"/>
+                                </Border>
+                                <Border BorderBrush="DarkGray" BorderThickness="2">
+                                    <TextBlock Text="{Binding startLocation}"/>
+                                </Border>
+                                <Border BorderBrush="DarkGray" BorderThickness="2">
+                                    <TextBlock Text="{Binding endLocation}"/>
+                                </Border>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
 
-                            </Grid>
-                            <Border BorderBrush="DarkGray" BorderThickness="2">
-                                <TextBlock Text="{Binding routeDescription}"/>
-                            </Border>
-                            <Border BorderBrush="DarkGray" BorderThickness="2">
-                                <TextBlock Text="{Binding routeInformation}"/>
-                            </Border>
-                        </StackPanel>
-                    </Border>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
-    </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>

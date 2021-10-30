@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DataAccess
 {
-    interface IDataManager
+    public interface IDataManager
     {
         public List<ITour> GetTours();
         public void insertTour(ITour NewTour);
@@ -21,6 +21,7 @@ namespace DataAccess
         public void deleteLog(int id);
         public void modifyLog(ILog NewLog);
         public int getLogId(string name);
-
+        public void exportTour(DataAccess.ITour tour, string path);
+        public DataAccess.ITour importTour(string path);
     }
 }

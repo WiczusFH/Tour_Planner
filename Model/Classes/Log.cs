@@ -63,8 +63,8 @@ namespace Model
 
         #region String Outputs
         public string routeName { get { return tour.name; } }
-        public string dateString { get { return date.ToString(); } }
-        public string distance { get { return Math.Round(tour.distance,2).ToString()+"km"; } }
+        public string dateString { get { return date == null ? null : date.ToString(); } }
+        public string distance { get { return tour==null? null : Math.Round(tour.distance,2).ToString()+"km"; } }
         public string durationString { get { return duration == -1 ? null : duration.ToString()+"h";  } }
         public string averageSpeedString { get { return averageSpeed == -1 ? null : Math.Round(averageSpeed,2).ToString()+"km/h";  } }
         public string topSpeedString { get { return topSpeed == -1 ? null : topSpeed.ToString() + "km/h";  } }

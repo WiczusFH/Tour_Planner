@@ -7,7 +7,7 @@ using Business;
 using DataAccess;
 using System.Windows.Media.Imaging;
 using System.Threading.Tasks;
-
+using Newtonsoft.Json;
 namespace Model
 {
     public class Repository
@@ -16,11 +16,16 @@ namespace Model
         public Observable observable = new Observable();
         private static Repository _address = new Repository();
         public static Repository address { get { return _address; } }
+        private Repository() { }
+
         #endregion
         #region Dependencies
-        public DataManager dataManager = new DataManager();
-        public ImageLoader imageLoader = new ImageLoader();
-        DataAccessModelConverter dataAccessModelConverter = new DataAccessModelConverter();
+        public IDataManager dataManager = new DataManager();
+        public IImageLoader imageLoader = new ImageLoader();
+        public IMapquest mapquest = new Mapquest();
+        public DataAccessModelConverter dataAccessModelConverter = new DataAccessModelConverter();
+
+
 
         #endregion
         #region Variables
@@ -36,15 +41,45 @@ namespace Model
 
 
 
-        //public float[] currentCoords { get; private set; }
         #endregion
-        private Repository() {
-            Configuration configuration = Configuration.address;
-            loadTourLogData();
 
 
+        //Filtering
+        public void filterTours(string filter)
+        {
+            tourList = dataAccessModelConverter.tourListModel(tourListDB);
+            List<Model.ITour> newList = new List<ITour>();
+            foreach (Model.ITour tour in tourList)
+            {
+                string serialized = JsonConvert.SerializeObject(tour);
+                Console.WriteLine(serialized);
+                if (serialized.Contains(filter))
+                {
+                    newList.Add(tour);
+                }
+            }
+            tourList = newList;
+            observable.OnPropertyChanged("tourFilter");
         }
 
+        public void filterLogs(string filter)
+        {
+            tourList = dataAccessModelConverter.tourListModel(tourListDB);
+            logList = dataAccessModelConverter.logListModel(logListDB,tourListDB,tourList);
+            List<Model.ILog> newList = new List<ILog>();
+            foreach (Model.ILog log in logList)
+            {
+                string serialized = JsonConvert.SerializeObject(log);
+                Console.WriteLine(serialized);
+                if (serialized.Contains(filter))
+                {
+                    newList.Add(log);
+                }
+            }
+            logList = newList;
+            observable.OnPropertyChanged("logFilter");
+        }
+        //ExportImport
         public void exportTour(string inputRoute, string exportPath)
         {
             foreach (DataAccess.ITour tour in tourListDB)
@@ -166,20 +201,30 @@ namespace Model
         //CRUD Tour
         public async void addTour(string inputName, string inputDescription, string inputInformation, string inputStartLocation, string inputEndLocation) // -R 
         {
-            Mapquest mapquest = new Mapquest();
+
+            //Mapquest mapquest = new Mapquest();
             string[] locations = { inputStartLocation, inputEndLocation };
             float[] coords = await mapquest.namesToCoord(locations);
+
+            if (coords==null? true:coords.Length != 4)
+            {
+                return;
+            }
             float distance = (float)Math.Pow(Math.Pow(coords[0] - coords[1], 2) + Math.Pow(coords[1] - coords[2], 2), 0.5);
             //Add to active list
             Tour tour = new Tour(inputName, inputDescription, inputInformation, distance, inputStartLocation, inputEndLocation);
             tourList.Add(tour);
             //Add to Database
-            dataManager.insertTour(new DataAccess.Tour(inputName,
+            DataAccess.Tour tourDB = new DataAccess.Tour(inputName,
                 distance,
                 inputStartLocation,
                 coords[0],
-                coords[1], inputEndLocation, coords[2], coords[3], -1, inputDescription, inputInformation));
+                coords[1], inputEndLocation, coords[2], coords[3], -1, inputDescription, inputInformation);
+            dataManager.insertTour(tourDB);
 
+            Console.WriteLine(tour.name);
+            Console.WriteLine(tourDB.name);
+            tourListDB.Add(tourDB);
             try
             {
                 imageLoader.saveImage(await mapquest.GetMapRouteCoord(coords[0], coords[1], coords[2], coords[3]), inputName);
@@ -227,6 +272,11 @@ namespace Model
         public void removeTour(int list_index) // -R also remove image
         {
             int id = -1;
+            if (list_index >= tourList.Count || list_index < 0)
+            {
+                Console.WriteLine(list_index);
+                return;
+            }
             string name = tourList[list_index].name;
             DataAccess.ITour tourToDelete = null;
             foreach (DataAccess.ITour tour in tourListDB)
@@ -330,25 +380,24 @@ namespace Model
             }
         }
 
-        //Utility
+        //Utilityz
         public string tourNameFromID(List<DataAccess.ITour> tourListDA, int inputRouteID)
         {
-            string name = null;
             foreach (DataAccess.ITour tour in tourListDA)
             {
-                if (tour.id == inputRouteID)
+                if (tour==null?false:tour.id == inputRouteID)
                 {
-                    name = tour.name;
+                    return tour.name;
                 }
             }
-            return name;
+            return null;
         }
         public int tourIDFromName(List<DataAccess.ITour> tourListDA, string inputRouteName)
         {
             int tour_id = -1;
             foreach (DataAccess.ITour tour in tourListDA)
             {
-                if (tour.name == inputRouteName)
+                if (tour == null ? false : tour.name == inputRouteName)
                 {
                     tour_id = tour.id;
                     break;
@@ -361,7 +410,7 @@ namespace Model
             int log_id = -1;
             foreach (DataAccess.ILog log in logListDA)
             {
-                if (log.logTitle == inputLogName)
+                if (log == null ? false : log.logTitle == inputLogName)
                 {
                     log_id = log.id;
                     break;
@@ -372,9 +421,9 @@ namespace Model
         public DataAccess.ILog logFromName(List<DataAccess.ILog> logListDA, string inputLogName)
         {
             DataAccess.ILog targetLog = null;
-            foreach (DataAccess.ILog log in logListDB)
+            foreach (DataAccess.ILog log in logListDA)
             {
-                if (log.logTitle == inputLogName)
+                if (log == null ? false : log.logTitle == inputLogName)
                 {
                     targetLog = log;
                     break;

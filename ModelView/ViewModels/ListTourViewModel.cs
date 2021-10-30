@@ -16,6 +16,13 @@ namespace ViewModel
         private static ListTourViewModel _address = new ListTourViewModel();
         public static ListTourViewModel address { get { return _address; } }
         #endregion
+
+        string _filter;
+        public string filter
+        {
+            get { return _filter; }
+            set { _filter = value; repository.filterTours(_filter); }
+        }
         Repository repository = Repository.address;
         public List<Model.ITour> routeList { get; private set; }
         public RelayCommandObj showMapCommand { get; }

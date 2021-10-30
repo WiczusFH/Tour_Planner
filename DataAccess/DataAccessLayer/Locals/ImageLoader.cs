@@ -8,7 +8,7 @@ using System.Threading;
 using log4net;
 namespace DataAccess
 {
-    public class ImageLoader 
+    public class ImageLoader : IImageLoader
     {
         log4net.ILog Logging = LogManager.GetLogger(typeof(ImageLoader));
 
@@ -52,7 +52,7 @@ namespace DataAccess
             bitmap.Save(sb.ToString());
             Logging.Info("Saved at" + sb.ToString());
         }
-        Bitmap BitmapImage2Bitmap(BitmapImage bitmapImage)
+        public Bitmap BitmapImage2Bitmap(BitmapImage bitmapImage)
         {
             using (MemoryStream outStream = new MemoryStream())
             {

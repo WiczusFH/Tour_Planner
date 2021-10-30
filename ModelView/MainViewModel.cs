@@ -1,6 +1,7 @@
 ﻿using System;
 using log4net;
 using System.Reflection;
+using Model;
 namespace ViewModel
 {
     public class MainViewModel
@@ -16,14 +17,15 @@ namespace ViewModel
         public ModifyTourViewModel modifyTourViewModel{ get; } = ModifyTourViewModel.address;
         public ModifyLogViewModel modifyLogViewModel{ get; } = ModifyLogViewModel.address;
         public ExportViewModel exportViewModel { get; } = ExportViewModel.address;
+        public Repository repository { get; } = Repository.address;
 
         #endregion
-        ILog Log = LogManager.GetLogger(typeof(MainViewModel));
+        log4net.ILog Log = LogManager.GetLogger(typeof(MainViewModel));
 
         public MainViewModel()
         {
             Log.Info("Instantiated. ");
-
+            repository.loadTourLogData();
         }
 
     }

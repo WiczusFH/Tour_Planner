@@ -14,6 +14,7 @@ namespace Tour_Planner
     /// </summary>
     public partial class App : Application
     {
+
         private static readonly ILog log = LogManager.GetLogger(typeof(App));
         protected override void OnStartup(StartupEventArgs e)
         {

@@ -35,7 +35,6 @@ namespace Model
                             return tourModel;
                         }
                     }
-                    //return new Model.Tour(tour.name, tour.routeDescription, tour.routeInformation, tour.distance, tour.sl_name, tour.el_name);
                 }
             }
             return null;
