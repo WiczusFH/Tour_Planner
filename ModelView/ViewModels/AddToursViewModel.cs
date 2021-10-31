@@ -14,7 +14,7 @@ namespace ViewModel
         private static AddToursViewModel _address = new AddToursViewModel();
         public static AddToursViewModel address { get { return _address; } }
 
-        private log4net.ILog log;
+        private log4net.ILog logging;
 
         #endregion
 
@@ -39,8 +39,7 @@ namespace ViewModel
         #region Constructor
         public AddToursViewModel() 
         {
-            log = LogManager.GetLogger(GetType());
-            log.Info("Tours View Model instantiated. ");
+            logging = LogManager.GetLogger(GetType());
             AddTourCommand = new RelayCommand(addTour, addTourPredicate);
             SearchAddressCommand = new RelayCommand(searchTour, searchTourPredicate);
             importTourCommand = new RelayCommand(importTour, importTourPredicate);
@@ -51,15 +50,12 @@ namespace ViewModel
         #region Predicates
         bool searchTourPredicate(object obj)
         {
-            log.Info("Using SearchTourPredicate. ");
 
             if (string.IsNullOrEmpty(inputEndLocation) && string.IsNullOrEmpty(inputStartLocation)) { return false; }
             return true;
         }
         bool addTourPredicate(object obj)
         {
-            log.Info("Using AddTourPredicate. ");
-
             if (string.IsNullOrEmpty(inputName)) { return false; }
             if (string.IsNullOrEmpty(inputStartLocation)) { return false; }
             if (string.IsNullOrEmpty(inputEndLocation)) { return false; }
@@ -67,8 +63,6 @@ namespace ViewModel
         }
         bool importTourPredicate(object obj)
         {
-            log.Info("Using AddTourPredicate. ");
-
             if (string.IsNullOrEmpty(inputPath)) { return false; }
             return true;
         }
@@ -95,11 +89,14 @@ namespace ViewModel
         }
         public void addTour()
         {
+            logging.Info("Adding tour: " + inputName);
             repository.addTour(inputName,inputDescription,inputInformation,inputStartLocation,inputEndLocation);
         }
         
         public void importTour()
         {
+            logging.Info("Importing tour from: " + inputPath);
+
             try
             {
                 repository.importTour(inputPath);

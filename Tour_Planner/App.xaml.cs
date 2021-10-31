@@ -19,7 +19,7 @@ namespace Tour_Planner
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-
+            log4net.GlobalContext.Properties["LogFileName"] = @"C:\\Users\\Oskar\\source\\repos\\Tour_Planner\\File"; //log file path
             log4net.Config.XmlConfigurator.Configure();
             log.Info("        =============  Started Logging  =============        ");
         }

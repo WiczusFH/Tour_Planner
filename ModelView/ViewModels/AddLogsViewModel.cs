@@ -17,7 +17,7 @@ namespace ViewModel
         public NotifyUser notifyUser = new NotifyUser();
         private static AddLogsViewModel _address = new AddLogsViewModel();
         public static AddLogsViewModel address { get { return _address; } }
-        private log4net.ILog log;
+        private log4net.ILog logging;
         #endregion
 
         #region Inputs
@@ -42,8 +42,7 @@ namespace ViewModel
         private AddLogsViewModel()
         {
             tourList = repository.tourList;
-            log = LogManager.GetLogger(GetType());
-            log.Info("Tours View Model instantiated. ");
+            logging = LogManager.GetLogger(GetType());
             addLogCommand = new RelayCommand(addLog, addLogPredicate);
             repository.observable.PropertyChanged += (s, e) => { tourList = repository.tourList; OnPropertyChanged("tourList"); };
 
@@ -65,6 +64,7 @@ namespace ViewModel
         #region Button Actions
         public async void addLog()
         {
+            logging.Info("Adding log: " + inputLogTitle);
             repository.addLog(inputLogTitle, inputRouteName, inputDuration, inputDate,report,rating,topSpeed);
         }
         #endregion

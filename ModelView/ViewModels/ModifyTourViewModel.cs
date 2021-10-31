@@ -55,7 +55,6 @@ namespace ViewModel
         }
         bool modifyCommandPredicate(object obj)
         {
-            log.Info("Using AddTourPredicate. ");
             if (string.IsNullOrEmpty(inputRouteName)) { return false; }
             return true;
         }

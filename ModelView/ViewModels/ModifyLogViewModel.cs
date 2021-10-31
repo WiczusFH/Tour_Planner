@@ -66,14 +66,16 @@ namespace ViewModel
         }
         bool modifyCommandPredicate(object obj)
         {
-            log.Info("Using AddTourPredicate. ");
             if (string.IsNullOrEmpty(inputRouteName)) { return false; }
             return true;
         }
 
         public void modifyLog()
         {
-            repository.modifyLog(inputRouteName, newDuration.Replace("h",""), newTopSpeed.Replace("km/h",""), newRating.Replace("/5",""), newReport, newDate);
+            repository.modifyLog(inputRouteName, 
+                newDuration==null?null:newDuration.Replace("h",""), 
+                newTopSpeed == null ? null : newTopSpeed.Replace("km/h",""), 
+                newRating == null ? null : newRating.Replace("/5",""), newReport, newDate);
         }
 
     }

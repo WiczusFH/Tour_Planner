@@ -6,7 +6,7 @@ namespace Model
 {
     public class DataAccessModelConverter
     {
-
+        public bool showOrphanLogs = true;
         public List<Model.ILog> logListModel(List<DataAccess.ILog> logListDA, List<DataAccess.ITour> tourListDA, List<Model.ITour> tourListModel)
         {
             List<Model.ILog> logList = new List<Model.ILog>();
@@ -17,6 +17,13 @@ namespace Model
                 {
                     logList.Add(new Model.Log(log.logTitle, log.duration, Date.fromString(log.date), tour,
                         log.report, log.rating, log.averageSpeed, log.topSpeed, log.calories));
+                } else
+                {
+                    if (showOrphanLogs)
+                    {
+                        logList.Add(new Model.Log(log.logTitle, log.duration, Date.fromString(log.date), null,
+                         log.report, log.rating, log.averageSpeed, log.topSpeed, log.calories));
+                    }
                 }
             }
             return logList;

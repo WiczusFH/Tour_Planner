@@ -517,7 +517,14 @@ namespace DataAccess
             DbCommand command = database.CreateCommand(sb.ToString());
             database.DefineParameter(command, LOGS_TABLE_COLUMNS.name.ToString(), DbType.String, NewLog.logTitle);
             database.DefineParameter(command, LOGS_TABLE_COLUMNS.route_id.ToString(), DbType.Int32, NewLog.route_id);
-            database.DefineParameter(command, LOGS_TABLE_COLUMNS.date.ToString(), DbType.Date, DateTime.Parse(NewLog.date, new CultureInfo("en-GB")));
+            if (string.IsNullOrEmpty(NewLog.date))
+            {
+                database.DefineParameter(command, LOGS_TABLE_COLUMNS.date.ToString(), DbType.DateTime, DBNull.Value);
+            }
+            else
+            {
+                database.DefineParameter(command, LOGS_TABLE_COLUMNS.date.ToString(), DbType.DateTime, DateTime.Parse(NewLog.date, new CultureInfo("en-GB")));
+            }
             database.DefineParameter(command, LOGS_TABLE_COLUMNS.report.ToString(), DbType.String, NewLog.report);
             database.DefineParameter(command, LOGS_TABLE_COLUMNS.duration.ToString(), DbType.Decimal, NewLog.duration);
             database.DefineParameter(command, LOGS_TABLE_COLUMNS.averageSpeed.ToString(), DbType.Decimal, NewLog.averageSpeed);

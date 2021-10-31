@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Model;
-
+using log4net;
 namespace ViewModel
 {
     public class ExportViewModel : Observable
@@ -24,6 +24,7 @@ namespace ViewModel
         public string inputRoute { get { return _inputRoute; } set { _inputRoute = value; exportCommand.RaiseCanExecuteChanged(); } }
         public RelayCommand exportCommand { get; private set; }
         Repository repository = Repository.address;
+        log4net.ILog logging = LogManager.GetLogger(typeof(ExportViewModel));
         private ExportViewModel()
         {
             exportCommand = new RelayCommand(export,exportPredicate);
@@ -42,6 +43,8 @@ namespace ViewModel
 
         void export()
         {
+            logging.Info("Exporting tour: " + inputRoute);
+
             try
             {
                 repository.exportTour(inputRoute, exportPath);

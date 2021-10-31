@@ -27,6 +27,8 @@ namespace ViewModel
         public List<Model.ITour> routeList { get; private set; }
         public RelayCommandObj showMapCommand { get; }
         public RelayCommandObj deleteRouteCommand { get; }
+        log4net.ILog logging = LogManager.GetLogger(typeof(ListTourViewModel));
+
         private ListTourViewModel()
         {
             routeList = repository.tourList;
@@ -35,12 +37,32 @@ namespace ViewModel
             deleteRouteCommand = new RelayCommandObj(deleteRoute, (obj) => { return true; });
         }
         void updateMap(object obj) {
-            int tourIndex = Int32.Parse(obj.ToString());
+            int tourIndex;
+            logging.Info("Updating map. ");
+
+            try
+            {
+                tourIndex = Int32.Parse(obj.ToString());
+            } catch(Exception e)
+            {
+                logging.Error("Parsing index failed. ");
+                return;
+            }
             repository.setImageFromTourId(tourIndex);
         }
         void deleteRoute(object obj)
         {
-            int tourIndex = Int32.Parse(obj.ToString());
+            int tourIndex;
+            logging.Info("Deleting Route. ");
+            try
+            {
+                tourIndex = Int32.Parse(obj.ToString());
+            }
+            catch (Exception e)
+            {
+                logging.Error("Parsing index failed. ");
+                return;
+            }
             repository.removeTour(tourIndex);
         }
 

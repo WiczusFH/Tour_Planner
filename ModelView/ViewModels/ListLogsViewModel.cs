@@ -16,6 +16,7 @@ namespace ViewModel
 
         private static ListLogsViewModel _address = new ListLogsViewModel();
         public static ListLogsViewModel address { get { return _address; } }
+        log4net.ILog logging = LogManager.GetLogger(typeof(ListLogsViewModel));
         #endregion
         public RelayCommandObj updateMapCommand { get; }
         public RelayCommandObj deleteLogCommand { get; }
@@ -36,12 +37,30 @@ namespace ViewModel
         }
         void updateMap(object obj)
         {
-            int logIndex = Int32.Parse(obj.ToString());
+            int logIndex;
+            logging.Info("Updating map. ");
+            try
+            {
+                logIndex = Int32.Parse(obj.ToString());
+            }
+            catch (Exception e)
+            {
+                logging.Error("Parsing index failed. ");
+                return;
+            }
             repository.setImageFromLogId(logIndex);
         }
         void deleteRoute(object obj)
         {
-            int logIndex = Int32.Parse(obj.ToString());
+            int logIndex;
+            logging.Info("Deleting route at index. " + obj.ToString());
+            try {
+                logIndex = Int32.Parse(obj.ToString());
+            } catch (Exception e)
+            {
+                logging.Error("Parsing index failed. ");
+                return;
+            }
             repository.removeLog(logIndex);
         }
 

@@ -86,7 +86,14 @@ namespace Model
             {
                 if (tour.name == inputRoute)
                 {
-                    dataManager.exportTour(tour, exportPath);
+                    try
+                    {
+                        dataManager.exportTour(tour, exportPath);
+                    } catch (Exception e)
+                    {
+                        Logging.Error("Couldn't export tour. ");
+                    }
+
                     break;
                 }
             }
@@ -94,19 +101,20 @@ namespace Model
 
         public async void importTour(string importPath)
         {
-            Mapquest mapquest = new Mapquest();
             DataAccess.ITour tourDB;
             try
             {
                 tourDB = dataManager.importTour(importPath);
+                dataManager.insertTour(tourDB);
+
             }
             catch {
                 Logging.Error("Couldn't import tour. ");
                 return; 
             }
-            dataManager.insertTour(tourDB);
             tourListDB.Add(tourDB);
             tourList.Add(dataAccessModelConverter.tourModel(tourDB));
+                 
             //getImage
 
             try
@@ -138,8 +146,24 @@ namespace Model
         //Initialise From Database
         public void loadTourLogData()
         {
-            tourListDB = dataManager.GetTours();
-            logListDB = dataManager.GetLogs();
+            try
+            {
+                tourListDB = dataManager.GetTours();
+            }
+            catch (Exception e)
+            {
+                Logging.Error("Couldn't fetch tours. ");
+            }
+            try
+            {
+                logListDB = dataManager.GetLogs();
+
+            }
+            catch (Exception e)
+            {
+                Logging.Error("Couldn't fetch logs. ");
+            }
+
             tourList = dataAccessModelConverter.tourListModel(tourListDB);
             logList = dataAccessModelConverter.logListModel(logListDB, tourListDB, tourList);
             observable.OnPropertyChanged("LogTourData");
@@ -148,11 +172,32 @@ namespace Model
         public void addLog(string inputLogTitle, string inputRouteName, string inputDuration, string inputDate, string report, string inputrating, string inputtopspeed)
         {
             Model.Log log = Log.fromStringInput(inputLogTitle, inputRouteName, inputDuration, inputDate, report, inputrating, inputtopspeed, tourList);
-            logList.Add(log);
             DataAccess.Log logToInsertDB = dataAccessModelConverter.logDA(log);
             logToInsertDB.route_id = tourIDFromName(tourListDB, inputRouteName);
+            int id=-1;
+            if (logToInsertDB.route_id == -1)
+            {
+                try
+                {
+                    id = dataManager.getTourId(inputRouteName);
+                }
+                catch (Exception e)
+                {
+                    Logging.Error("Couldn't find the tour for the log. ");
+                    return;
+                }
+                logToInsertDB.route_id = id;
+            }
+            logList.Add(log);
             logListDB.Add(logToInsertDB);
-            dataManager.insertLog(logToInsertDB);
+            try
+            {
+                dataManager.insertLog(logToInsertDB);
+            } catch (Exception e) 
+            {
+                Logging.Error("Couldn't insert Log");
+                return;
+            }
             observable.OnPropertyChanged("LogTourData");
         }
 
@@ -178,13 +223,22 @@ namespace Model
             }
             Model.ILog newLog=Log.fromStringInput(targetLog.logTitle, targetLog.routeName, newDuration, newDate, newReport, newRating, newTopSpeed, tourList);
             int routeID = targetLogDB.route_id;
+
+            DataAccess.ILog newLogDB = dataAccessModelConverter.logDA(newLog);
+            newLogDB.route_id = routeID;
+            try
+            {
+                dataManager.modifyLog(newLogDB);
+            } catch (Exception e)
+            {
+                Logging.Error("Couldn't Modify Log. ");
+                return;
+            }
             logList.Remove(targetLog);
             logListDB.Remove(targetLogDB);
             logList.Add(newLog);
-            DataAccess.ILog newLogDB = dataAccessModelConverter.logDA(newLog);
-            newLogDB.route_id = routeID;
             logListDB.Add(newLogDB);
-            dataManager.modifyLog(newLogDB);
+
             observable.OnPropertyChanged("LogTourData");
         }
 
@@ -192,7 +246,14 @@ namespace Model
         {
             string name = logList[logIndex].logTitle;
             DataAccess.ILog logToDelete = logFromName(logListDB, name);
-            dataManager.deleteLog(logToDelete.id);
+            try
+            {
+                dataManager.deleteLog(logToDelete.id);
+            } catch (Exception e)
+            {
+                Logging.Error("Couldn't delete Log. ");
+                return;
+            }
             logList.RemoveAt(logIndex);
             logListDB.Remove(logToDelete);
             observable.OnPropertyChanged("LogTourData");
@@ -204,26 +265,38 @@ namespace Model
 
             //Mapquest mapquest = new Mapquest();
             string[] locations = { inputStartLocation, inputEndLocation };
-            float[] coords = await mapquest.namesToCoord(locations);
+            float[] coords = null;
+            try {
+                coords = await mapquest.namesToCoord(locations);
+            }catch(Exception e)
+            {
+                Logging.Error("Couldn't get coordinates. ");
+                return;
+            }
 
             if (coords==null? true:coords.Length != 4)
             {
+                Logging.Error("Couldn't get coordinates. ");
                 return;
             }
             float distance = (float)Math.Pow(Math.Pow(coords[0] - coords[1], 2) + Math.Pow(coords[1] - coords[2], 2), 0.5);
             //Add to active list
             Tour tour = new Tour(inputName, inputDescription, inputInformation, distance, inputStartLocation, inputEndLocation);
-            tourList.Add(tour);
             //Add to Database
             DataAccess.Tour tourDB = new DataAccess.Tour(inputName,
                 distance,
                 inputStartLocation,
                 coords[0],
                 coords[1], inputEndLocation, coords[2], coords[3], -1, inputDescription, inputInformation);
-            dataManager.insertTour(tourDB);
-
-            Console.WriteLine(tour.name);
-            Console.WriteLine(tourDB.name);
+            try
+            {
+                dataManager.insertTour(tourDB);
+            }
+            catch (Exception e){ 
+                Logging.Error("Couldn't insert Tour. ");
+                return;
+            }
+            tourList.Add(tour);
             tourListDB.Add(tourDB);
             try
             {
@@ -264,7 +337,13 @@ namespace Model
             newDBTour.routeInformation = newInformation;
             newModelTour.routeDescription = newDescription;
             newModelTour.routeInformation = newInformation;
+            try { 
             dataManager.modifyTour(newDBTour);
+            } catch (Exception e)
+            {
+                Logging.Error("Couldn't modify Tour. ");
+            }
+
             observable.OnPropertyChanged("LogTourData");
 
         }
@@ -288,7 +367,14 @@ namespace Model
                     break;
                 }
             }
-            dataManager.deleteTour(id);
+            try
+            {
+                dataManager.deleteTour(id);
+
+            } catch (Exception e)
+            {
+                Logging.Error("Couldn't delete Tour. ");
+            }
             tourList.RemoveAt(list_index);
             tourListDB.Remove(tourToDelete);
             observable.OnPropertyChanged("LogTourData");
@@ -339,7 +425,6 @@ namespace Model
         }
         public async Task updateMap(string start, string end)
         {
-            Mapquest mapquest = new Mapquest();
             try
             {
                 string[] locations = { start, end };
@@ -354,7 +439,6 @@ namespace Model
         }
         public void setImageFromLogId(int logIndex)
         {
-            string name = logList[logIndex].tour.name;
             try
             {
                 if (logIndex == -1)
@@ -364,6 +448,7 @@ namespace Model
                 }
                 try
                 {
+                    string name = logList[logIndex].tour.name;
                     displayedImage = imageLoader.getImage(name);
                     return;
                 }
@@ -380,7 +465,7 @@ namespace Model
             }
         }
 
-        //Utilityz
+        //Utility
         public string tourNameFromID(List<DataAccess.ITour> tourListDA, int inputRouteID)
         {
             foreach (DataAccess.ITour tour in tourListDA)

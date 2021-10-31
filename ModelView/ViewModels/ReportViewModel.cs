@@ -7,7 +7,7 @@ using System.Collections.ObjectModel;
 
 namespace ViewModel
 {
-    public class ReportViewModel
+    public class ReportViewModel : Observable
     {
         #region Singleton
         public Observable observable = new Observable();
@@ -20,15 +20,16 @@ namespace ViewModel
         string _inputRouteName;
         public string inputRouteName { get { return _inputRouteName; } set { _inputRouteName = value; generateTourReportCommand.RaiseCanExecuteChanged(); } }
         Repository repository = Repository.address;
-        ObservableCollection<ITour> _tourList;
-        public ObservableCollection<ITour> tourList { get { return _tourList; } set { _tourList = value; observable.OnPropertyChanged("tourList"); } }
+        List<ITour> _tourList;
+        public List<ITour> tourList { get { return _tourList; } set { _tourList = new List<Model.ITour>(repository.tourList); observable.OnPropertyChanged("tourList"); } }
         public RelayCommand generateTourReportCommand { get; }
         public RelayCommand generateLogReportCommand { get; }
 
         ReportViewModel() { 
-            tourList = new ObservableCollection<ITour>(repository.tourList);
+            tourList = new List<ITour>(repository.tourList);
             generateTourReportCommand = new RelayCommand(generateTourReport, generateReportPredicate);
             generateLogReportCommand = new RelayCommand(generateLogReport, (obj)=> { return true; });
+            repository.observable.PropertyChanged += (s, e) => { tourList = repository.tourList; OnPropertyChanged("tourList"); };
 
         }
         bool generateReportPredicate(object obj)
